@@ -1,2 +1,2 @@
 # Study
-HTML/CSS 공부하는용
+개인 공부
