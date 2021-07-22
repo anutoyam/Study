@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            /*태그 선택자*/
+            li{
+            color: red;                
+                text-decoration: underline;
+            }
+            /*id 선택자*/
+            #select{
+                font-size: 50px;
+            }
+            /*클래스 선택자 id,class 구분해서 쓰자*/
+            .deactive{
+                color: peru;
+                text-decoration: line-through;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="deactive">수업의 순서</h1>
+        <ul>
+            <!--id 선언은 한번만 하나당 한개
+            여러개 하고싶으면 grouping을 하자 (class)-->
+            <li id class="deactive">HTML</li>
+            <li id="select">CSS</li>
+            <li id class="deactive">JavaScript</li>
+        </ul>
+    </body>
+</html>
