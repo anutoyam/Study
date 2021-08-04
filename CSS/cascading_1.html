@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            /* !important를 넣는다면 우선순위 1순위*/
+            li{color: red;}
+            #idsel{color: blue;}
+            .classsel{color: green;}
+        </style>
+    </head>
+    <body>
+        <ul>
+            <li>html</li>
+            <li id="idsel" class="classsel" style="color:powderblue">css</li>
+            <li>javascript</li>
+        </ul>
+        <ol>
+            <!-- cascading 규칙(우선순서) -->
+            <li>style attribute</li>
+            <li>id selector</li>
+            <li>class selector</li>
+            <li>tag selector</li>
+ 
+        </ol>
+    </body>
+</html>
