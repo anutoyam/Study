@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body{
+                padding-top: 30px;
+            }
+            #other,
+            #parent {
+                border: 5px solid tomato;
+            }
+            #large{height: 10000px;
+            background-color: tomato;}
+            #me {
+                background-color: black;
+                color: white;
+                /* 엘리먼트를 화면에 그 위치에 고정시켜 
+                스크롤에서 독립되게 만드는것 fixed
+                absolute 와 비슷한데 위치를 지정하지 않으면 부모가 없어짐
+                자기의 크기가 컨텐트가 된다.*/
+                position: fixed;
+                right: 0;
+                top: 0;
+                width: 100%;
+                height: 30px;
+                text-align: center;
+
+            }
+        </style>
+    </head>
+    <body>
+        <div id="other">other</div>
+        <div id="parent">
+            parent
+            <div id="me">me</div>
+        </div>
+        <div id="large">large</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            #grand,
+            #other,
+            #parent {
+                border: 5px solid tomato;
+            }
+            #grand {
+                /* 부모를 relative로 지정하고, 자식을 absolute로 지정한다면
+                부모를 기준으로 자식이 위치를 지정한다. */
+                position: relative;
+            }
+            #me {
+                background-color: black;
+                color: white;
+                /* HTML 기준으로 해서 위치를 지정하고 싶을땐 absolute 
+                absolute를 지정해준다면 부모 자식 링크가 끊기게 된다.*/
+                position: absolute;
+                left: 0;
+                top: 0;
+
+            }
+        </style>
+    </head>
+    <body>
+        <div id="other">other</div>
+        <div id="grand">
+            grand
+
+            <div id="parent">
+                parent
+                <div id="me">me</div>
+            </div>
+        </div>
+    </body>
+</html>
