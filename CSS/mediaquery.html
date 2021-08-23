@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            /* 코드는 밑에있는게 우선순위가 높다(개인적인 생각이지만 색깔 덮어 씌우기를 생각해보자) */
+            @media (max-width:600px){
+                body{
+                    background-color: green;
+                }
+            }
+            @media (max-width:500px) {
+                body {
+                    background-color: red;
+                }
+            }
+            @media (min-width: 601px) {
+                body {
+                    background-color: blue;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <li>~500px : red</li> 
+        <li> 501~600px : green</li>
+        <li> 601px~ : blue</li>
+    </body>
+</html>
