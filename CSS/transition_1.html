@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            a{
+                font-size: 3rem;
+                display: inline-block;
+                /* transition-property: font-size transform; 같은 의미다*/
+                /* transition-duration: 1s; */
+                /* transition:all 1s; */
+
+                transition: font-size 1s, transform 0.1s;
+                transition-delay: 1s;
+            }
+            a:active{
+                transform: translate(20px,20px);
+                font-size: 2rem;
+                color: skyblue;
+            }
+        </style>
+    </head>
+    <body>
+        <a href="#">gg</a>
+    </body>
+</html>
