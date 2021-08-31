@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="buttons.css">
+        <!-- Only needed if you want support for dropdown menus -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript" src="buttons.js"></script>
+        <!-- Only needed if you want font icons -->
+        <link
+            href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css"
+            rel="stylesheet">
+    </head>
+    <body>
+        <a
+            href="https://www.naver.com"
+            class="button button-3d button-primary button-rounded"><i class="fa fa-rss"></i>네이버</a>
+        <button type="button" class="button button-3d">네이버</button>
+
+        <span class="button-dropdown" data-buttons="dropdown">
+            <button class="button button-rounded">
+                Select Me
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <ul class="button-dropdown-list">
+                <li>
+                    <a href="/">Option Link 1</a>
+                </li>
+                <li>
+                    <a href="/">Option Link 2</a>
+                </li>
+                <li class="button-dropdown-divider">
+                    <a href="#">Option Link 3</a>
+                </li>
+            </ul>
+        </span>
+    </body>
+</html>

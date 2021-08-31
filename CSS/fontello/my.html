@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="css/fontello.css">
+        <link rel="stylesheet" href="css/animation.css">
+        <style>
+            body{
+                font-size: 100px;
+                font-family: fontello;
+            }
+            #test::before{
+                content: "s";
+                color: red;
+                font-size: 30px;
+            }
+            #test::after{
+                content: "e";
+            }
+            #git{
+               font-family: "fontello"; 
+            }
+        </style>
+    </head>
+    <body>
+        <div id="test">
+            A
+        </div>
+        <!-- A를 표현하는 2가지 방법 HTML 코드를 사용하거나 문자를 입력하거나 -->
+        &#65; A
+        <br>
+        <!-- 0을 &#로 치환해줘야 볼 수 있다. -->
+        &#xe800 <br>
+        &#xe802 <br>
+        &#xe80b <br>
+        <i class="icon-hospital animate-spin"></i>
+        <div id="git">&#xe800</div>
+        <a href="http://unicorn-ui.com" class="button button-tiny">Go</a>
+        <button class="button button-square button-tiny"><i class="fa fa-plus"></i></button>
+    </body>
+</html>
