@@ -7,7 +7,28 @@
         <script type="text/javascript">
             alert('줄바꿈\n안녕하세요 연습합니다')
             var a = 1;
-            alert('1+1은 = ' +  (a+1) + '입니다');
+            alert('1+1은 = ' + (
+                a + 1
+            ) + '입니다');
+
+            // False로 간주되는 데이터 형
+            if (!'') {
+                alert('빈 문자열')
+            }
+            if (!undefined) {
+                alert('undefined');
+            }
+            var a;
+            if (!a) {
+                alert('값이 할당되지 않은 변수');
+            }
+            if (!null) {
+                alert('null');
+            }
+            if (!NaN) {
+                alert('NaN');
+            }
         </script>
+
     </body>
 </html>

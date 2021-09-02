@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <script type="text/javascript">
+
+            function numbering() {
+                // document.write(1);
+                i = 0;
+                while (i < 10) {
+                    document.write(i);
+                    i += 1;
+                }
+            }
+            function plus(a, b) {
+                c = a + b;
+                document.write(c);
+            }
+            numbering();
+            numbering();
+            numbering();
+            numbering();
+            plus(3, 120);
+
+            function get_member1() {
+                return 'mayo';
+            }
+            alert(get_member1());
+
+            // 함수의 다른 정의
+            var numbering = function () {
+                i = 0;
+                while (i < 10) {
+                    document.write(i);
+                    i += 1;
+                }
+            }
+
+            //익명함수
+            (function () {
+                i = 0;
+                while (i < 10) {
+                    document.write(i);
+                    i += i;
+                }
+            })();
+            numbering();
+        </script>
+    </body>
+</html>
