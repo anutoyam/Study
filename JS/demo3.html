@@ -1,9 +1,61 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <script></script>
-</head>
-<body>
-    
-</body>
+    <head>
+        <script>
+            var li = ['a', 'b', 'c', 'd', 'e'];
+            li.push('f');
+            alert(li);
+            // push - 1개의 데이터를 넣는다 abcde'f' 끝에 넣는다
+
+            var li = ['a', 'b', 'c', 'd', 'e'];
+            li.concat('f', 'g');
+            alert(li);
+            // concat - 여러개의 데이터를 넣는다
+
+            var li = ['a', 'b', 'c', 'd', 'e'];
+            li.unshift('z');
+            alert(li);
+            // unshift - 'z'abcde 끝에 넣는다
+
+            var li = ['a', 'b', 'c', 'd', 'e'];
+            li.splice(2, 0, 'B');
+            alert(li);
+            //splice - 선택한 위치에서 x번째 데이터를 삭제하고 데이터를 넣는다
+
+            var li = ['a', 'b', 'c', 'd', 'e'];
+            li.shift();
+            alert(li);
+            //shift - 첫번째 원소를 제거한다.
+
+            var li = ['a', 'b', 'c', 'd', 'e'];
+            li.pop();
+            alert(li);
+            //pop - 마지막 원소를 제거한다.
+
+            var li = ['c', 'e', 'a', 'b', 'd'];
+            li.sort();
+            alert(li);
+            //정방향으로 정렬한다.
+
+            var li = ['c', 'e', 'a', 'b', 'd'];
+            li.reverse();
+            alert(li);
+            //역순으로 정렬한다.
+
+            var grades = {
+                'list': {
+                    'mayo': 10,
+                    'tuna': 20,
+                    'yami': 30
+                },
+                'show': function () {
+                    for (var name in grades.list) 
+                        console.log(name + ' : ' + this.list[name])
+                }
+            }
+            grades.show();
+            //객체지향 프로그래밍 : 서로 연관된 값과 연관된 처리를 한 공간에 모아서 그룹해둔게 객체 지향형 프로그래밍이다.
+        </script>
+    </head>
+    <body></body>
 </html>
