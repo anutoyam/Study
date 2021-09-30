@@ -1,0 +1,39 @@
+자바스크립트의 API는 크게 자바스크립트 자체의 API와 자바스크립트가 동작하는 호스트의 환경의 API로 구분된다.
+
+[정규표현식]
+
+정규표현식 리터럴
+var pattern = /a/; <- /사이의 a가 대상이 찾고있는 변수이다.
+
+어떤 문자열에서 'url' 정보만을 [추출]하고 싶다 -> exec 정규표현식 사용.
+자신이 확인하고자 하는 정보가 있는지 [테스트]하는것 -> test 정규표현식 사용.
+검색된 정보를 다른것으로 치환하는것 -> 정규표현식 사용.
+
+var pattern = /a/;
+var str = 'abcde';
+
+RegExp.exec()
+RegExp.test()
+RegExp.match(pattern)
+RegExp.replace(pattern,'A');
+
+[i]
+var xi = /a/; - 대소문자를 구분함
+var oi = /a/i; - 대소문자를 구분하지 않음
+
+[g]
+var xg = /a/; - 중복된다면 한개만 표시
+var og = /a/g; - 중복 검사안하고 전부 표시 
+
+정규표현식에서 괄호는 Group을 의미함
+\w - word(문자)
+\s - white_space(빈공간)
+
+/(\w+)\s(\w+)/ = 문자 + 공백 + 문자
+
+var pattern = /(\w+)\s(\w+)/;
+var str = "coding everybody";
+var result = str.replace(pattern, "$2, $1");
+console.log(result);
+
+result = everbody, coding
