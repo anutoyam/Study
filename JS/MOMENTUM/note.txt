@@ -1,0 +1,5 @@
+JS 공부
+
+[VARIABLE]
+const - 상수 (값이 바뀌지 않음)
+let - 가변
