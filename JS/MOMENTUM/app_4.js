@@ -1,4 +1,5 @@
 //function
+
 // function sayHello(nameOfPerson, age){
 //     console.log("Hello! My name is " + nameOfPerson
 //     + " and I'm " + age);
@@ -22,9 +23,20 @@ const player = {
         console.log("두 수의 나눗셈은 "+ [a / b] + "입니다.")
     }
 }
+
+const calculator = {
+    add : function(a, b){
+        console.log(a + b);
+    },
+    divide : function(a, b){
+        console.log(a / b);
+    }
+}
 player.sayHello("Tuna",30);
 player.sayHello("Summers",21);
 player.sayHello("Marino",15);
 player.plus(10,20);
 player.divide(98,20);
+
+calculator.add(5,8);
 

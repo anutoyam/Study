@@ -4,3 +4,5 @@ JS 공부
 const - 상수 (값이 바뀌지 않음)
 let - 재선언 불가능, 가변
 var - 재선언 가능 ,가변
+
+JS는 HTML과 연결되어있다 시작점은 document
