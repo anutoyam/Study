@@ -5,4 +5,13 @@ const - 상수 (값이 바뀌지 않음)
 let - 재선언 불가능, 가변
 var - 재선언 가능 ,가변
 
-JS는 HTML과 연결되어있다 시작점은 document
+- JS는 HTML과 연결되어있다 시작점은 document
+
+- console.dir로 property 확인시
+  on << 붙은것은 event로 활용 가능.
+
+
+- document는 title,body 등등을 로드, 
+  그 외(div, h1...)는 queryselector,queryselectorall 등 사용
+
+  1.element를 찾아라 2.event를 listen 해라 3.event에 반응하라
