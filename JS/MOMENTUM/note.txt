@@ -23,3 +23,16 @@ var - 재선언 가능 ,가변
 - bgImage.src에 경로를 붙일 수 있다. ex)bgImage.src = `img/${chosenImage}`;
 - getElementById = id만 쓰자
 - querySelector = #을 붙여야한다
+
+*element와 node의 차이점*
+- DOM은 Node의 계층 구조로 이루어져 있다.
+각 노드는 부모와 children을 가질 수 있다.
+
+- Element는 node의 특정 타입 즉, Node.ELEMENT_NODE 이다.
+element는 HTML에서 태그로 적은 노드들을 지칭한다. 예를들어, <html>, <div>, <title>과 같은 태그로 나타낸 것들은 전부 element인 것이다.
+text node와 같은 것들은 HTML 태그로 표현된 것이 아니므로 element가 아니다.
+
+JS DOM(Document Object Model)에서 Node는 node의 constructor이고, HTMLElement는 element의 constructor이다.
+paragraph는 node이자 동시에 element이다.
+
+https://url.kr/4x2omg 참고
