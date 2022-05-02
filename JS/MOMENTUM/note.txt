@@ -36,3 +36,5 @@ JS DOM(Document Object Model)에서 Node는 node의 constructor이고, HTMLEleme
 paragraph는 node이자 동시에 element이다.
 
 https://url.kr/4x2omg 참고
+
+- JSON.stringify - String으로 변경해준다
