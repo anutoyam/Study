@@ -16,9 +16,11 @@ function deleteTodo(event) {
     // const li = toDoList.querySelector("li"); 
     //console.dir(event.target.parentElement);
     
-    //toDoList.removeChild(li); 강의 코드
+    //toDoList.removeChild(li); //강의 코드
     const li = event.target.parentElement;
     li.remove();
+    toDos = toDos.filter(toDo => toDo.id !== parseInt(li.id));
+    saveToDos();
 }
 
 function paintTodo(newTodo) {
@@ -58,7 +60,7 @@ toDoForm.addEventListener("submit", handleToDoSubmit);
 const savedToDos = localStorage.getItem(TODOS_KEY);
 if (savedToDos !== null){
     const parsedToDos = JSON.parse(savedToDos);
-    console.log(parsedToDos);
+    //console.log(parsedToDos);
     // parsedToDos.forEach(sayHello);
     toDos = parsedToDos;
     //solution 2) foreach로 구현하기
@@ -68,4 +70,8 @@ if (savedToDos !== null){
     // for(i=0; i<parsedToDos.length; i++){
     //     paintTodo(parsedToDos[i].text);
     // }
+}
+
+function sexyFilter(){
+
 }
