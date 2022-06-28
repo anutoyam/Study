@@ -1,7 +1,11 @@
+
+
 .hidden {
     display: none;
 }
 body{
+    width: 1920px;
+    height: 1080px;
     margin: 0PX;
     position: relative;
 }
@@ -49,9 +53,11 @@ img{
 #todo-list{
     width: 100%;
     
-    text-align: center;
+    color: cornsilk;
 
-    margin: 580px auto;
+    margin-left: 580px;
+    margin-top: 580px;
+    
     position: absolute;
 }
 #blog{
@@ -68,7 +74,7 @@ img{
     color: white;
     text-align: center;
 
-    margin: 800PX auto;
+    margin: 900PX auto;
     position: absolute;
     
 }
