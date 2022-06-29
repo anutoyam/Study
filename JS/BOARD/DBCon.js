@@ -1,3 +1,5 @@
+const btn_READ = document.getElementById("db_READ");
+
 const mysql = require('mysql');
 const conn = {
     host: '127.0.0.1',
@@ -7,17 +9,20 @@ const conn = {
     database: 'test_db'
 };
 
-let connection = mysql.createConnection(conn);
-connection.connect();
+btn_READ.addEventListener("click",selectQuery);
 
-let sql = "select * from tb_user";
+function selectQuery() {
+    let connection = mysql.createConnection(conn);
+    connection.connect();
 
-connection.query(sql,function(err,results,fields){
-    if(err){
-        console.log(err);
-    }
-    console.log(results);
-})
+    let sql = "select * from tb_user";
 
-connection.end();
+    connection.query(sql, function (err, results, fields) {
+        if (err) {
+            console.log(err);
+        }
+        console.log(results);
+    })
 
+    connection.end();
+}
