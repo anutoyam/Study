@@ -11,8 +11,8 @@ const client = mysql.createConnection(
 
 const app = express();
 
+//CSS Load
 app.use(express.static(__dirname));
-//app.use('/css',express.static(__dirname +'/css'));
 
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -20,6 +20,7 @@ app.listen(52273, function () {
     console.log('Server is running at : http://127.0.0.1:52273')
 });
 
+//Select Query
 app.get('/', function (req, res) {
     fs.readFile('list.ejs', 'utf8', function (err, data) {
         client.query('select * from topic', function (err, results) {
@@ -32,18 +33,21 @@ app.get('/', function (req, res) {
     })
 });
 
+//Delete Query
 app.get('/delete/:id', function (req, res) {
     client.query('delete from topic where id = ?', [req.params.id], function () {
         res.redirect('/');
     })
 });
 
+//Insert_1
 app.get('/insert', function (req, res) {
     fs.readFile('insert.html', 'utf8', function (err, data) {
         res.send(data);
     })
 });
 
+//Insert_2 Query
 app.post('/insert', function (req, res) {
     const body = req.body;
 
@@ -58,6 +62,7 @@ app.post('/insert', function (req, res) {
     );
 });
 
+//Update_1
 app.get('/edit/:id', function (req, res) {
     fs.readFile('edit.ejs', 'utf8', function (err, data) {
         client.query(
@@ -70,6 +75,7 @@ app.get('/edit/:id', function (req, res) {
     });
 });
 
+//Update_2 Query
 app.post('/edit/:id', function (req, res) {
     const body = req.body;
 
