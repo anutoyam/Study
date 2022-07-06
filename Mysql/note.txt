@@ -8,3 +8,11 @@ U - Update
 D - Delete
 
 관계형 데이터베이스는 왜 필요한가 
+
+mysql mornitor는 server를 설치하면 따라온다. - 어디서든 사용가능함
+단점 - 명령어로 동작해야하기 때문에, 명령어를 기억해야함.
+
+workbench 프로그램은 gui 기반이다.
+단점 - gui라서 컴퓨터 사양이 부족할수있다.
+
+자신을 나타내는 IP(localhost) - 127.0.0.1

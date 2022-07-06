@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <title>Edit TITLE Data</title>
+</head>
+<body>
+  <h1>Edit TITLE Info</h1>
+  <hr/>
+  <form method="post">
+    <fieldset>
+      <legend>Edit TITLE Info</legend>
+      <table>
+        <tr>
+          <td><label>ID</label></td>
+          <td><input type="text" name="id" value="<%= data.id %>" disabled/> </td>
+        </tr>
+        <tr>
+          <td><label>TITLE</label></td>
+          <td><input type="text" name="title" value="<%= data.title %>"/></td>
+        </tr>
+        <tr>
+          <td><label>DESCRIPTION</label></td>
+          <td><input type="text" name="description" value="<%= data.description %>" /></td>
+        </tr>
+        <tr>
+          <td><label>AUTHOR_ID</label></td>
+          <td><input type="text" name="author_id" value="<%= data.author_id %>" /></td>
+        </tr>
+      </table>
+      <input type="submit" value="Submit!" />
+    </fieldset>
+  </form>
+</body>
+</html>

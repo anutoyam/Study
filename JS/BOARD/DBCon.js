@@ -4,7 +4,7 @@ const mysql = require('mysql');
 const conn = {
     host: '127.0.0.1',
     port: '3306',
-    user: 'T_ID',
+    user: 'root',
     password: '1234',
     database: 'test_db'
 };
