@@ -6,3 +6,6 @@ class 문법, function 문법으로 만들 수 있다.
 import App from './App'; (App뒤에 .js가 생략됨)
 
 리액트는 사용자 정의 태그를 만드는 기술이다.
+
+리액트의 사용자 정의태그는 반드시 대문자로 시작
+사용자 정의 태그는 component라고 부른다.
