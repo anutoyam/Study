@@ -1,0 +1,5 @@
+React(리액트)
+
+class 문법, function 문법으로 만들 수 있다.
+요즘은 function 문법이 많기에 function 방법으로 배운다.
+
