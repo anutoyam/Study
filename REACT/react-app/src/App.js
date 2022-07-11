@@ -2,13 +2,27 @@ import './App.css';
 
 function Header(props) {
   return <header>
-  <h1><a href='/'>{props.title}</a></h1>
+  <h1><a href='/' onClick = {(event)=>{
+    event.preventDefault();
+    props.onChangeMode();
+  }}>{props.title}</a></h1>
 </header>
 }
 
-function Nav(props ) {
+function Nav(props) {
+  const lis = []
+  for(let i=0; i<props.topics.length; i++){
+    let t = props.topics[i];
+    lis.push(<li key ={t.id}>
+      <a id={t.id} href ={'/read/' + t.id} onClick = {event=>{
+      event.preventDefault();
+      props.onChangeMode(event.target.id);
+    }}>{t.title}</a></li>);
+  }
   return <nav>
-  <li><a href="/read/{props.id}">{props.title}</a></li>
+    <ol>
+      {lis}
+    </ol>
 </nav>
 }
 
@@ -21,16 +35,27 @@ function Article(props) {
 }
 
 function App() {
-  const topic = [
+    const mode = 'WELCOME';
+    const topic = [
     {id:1, title:'html', body:'html is ...'},
     {id:2, title:'css', body:'css is ...'},
     {id:3, title:'javascript', body:'javascript is ...'}
   ]
+  let content = null;
+  if(mode === 'WELCOME'){
+    content = <Article title = "Welcome" body = "Hello, Web!"></Article>;
+  }else if(mode === 'READ'){
+    content = <Article title = "Welcome" body = "Hello, READ!"></Article>;
+  }
   return (
     <div>
-      <Header title = "React test!"></Header>
-      <Nav ></Nav>
-      <Article title = "Welcome" body = "Hello, Web!"></Article>
+      <Header title = "React test!" onChangeMode = {()=>{
+        alert('Header');
+      }}></Header>
+      <Nav topics = {topic} onChangeMode = {(id) =>{
+        alert(id)
+      }}></Nav>
+      {content}
     </div>
   );
 }
