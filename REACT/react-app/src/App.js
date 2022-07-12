@@ -1,4 +1,5 @@
 import './App.css';
+import {useState} from 'react';
 
 function Header(props) {
   return <header>
@@ -35,7 +36,8 @@ function Article(props) {
 }
 
 function App() {
-    const mode = 'WELCOME';
+    const[mode,setMode] = useState('WELCOME');
+    const[id,setId] = useState(null);
     const topic = [
     {id:1, title:'html', body:'html is ...'},
     {id:2, title:'css', body:'css is ...'},
@@ -45,15 +47,26 @@ function App() {
   if(mode === 'WELCOME'){
     content = <Article title = "Welcome" body = "Hello, Web!"></Article>;
   }else if(mode === 'READ'){
-    content = <Article title = "Welcome" body = "Hello, READ!"></Article>;
+    let title, body = null;
+    for(let i=0; i<topic.length; i++){
+      if(topic[i].id === id){
+        title = topic[i].title;
+        body = topic[i].body;
+      }
+    }
+    content = <Article title = {title} body = {body}></Article>;
   }
+
+
   return (
     <div>
       <Header title = "React test!" onChangeMode = {()=>{
-        alert('Header');
+        setMode('WELCOME');
       }}></Header>
-      <Nav topics = {topic} onChangeMode = {(id) =>{
-        alert(id)
+      <Nav topics = {topic} onChangeMode = {(_id) =>{
+        //setMode('READ');
+        setId(_id);
+        console.log(_id);
       }}></Nav>
       {content}
     </div>
