@@ -21,3 +21,8 @@ a 태그에서 id 값을 가져오고 싶을때는 event.target.id 를 사용한
 prop과 state 차이 
 prop - component를 사용하는 외부자를 위한것
 state - component를 만드는 내부자를 위한것
+
+usestate의 인자는 그 state의 초기값이다. 
+그 state값은 0번째 index값으로 읽는다.
+state를 바꿀때는 1번째 index값으로 한다.
+
