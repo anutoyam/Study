@@ -17,7 +17,7 @@ function Nav(props) {
     lis.push(<li key ={t.id}>
       <a id={t.id} href ={'/read/' + t.id} onClick = {event=>{
       event.preventDefault();
-      props.onChangeMode(event.target.id);
+      props.onChangeMode(Number(event.target.id));
     }}>{t.title}</a></li>);
   }
   return <nav>
@@ -64,9 +64,9 @@ function App() {
         setMode('WELCOME');
       }}></Header>
       <Nav topics = {topic} onChangeMode = {(_id) =>{
-        //setMode('READ');
+        setMode('READ');
         setId(_id);
-        console.log(_id);
+        //console.log(_id);
       }}></Nav>
       {content}
     </div>
