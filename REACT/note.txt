@@ -26,3 +26,30 @@ usestate의 인자는 그 state의 초기값이다.
 그 state값은 0번째 index값으로 읽는다.
 state를 바꿀때는 1번째 index값으로 한다.
 
+상태를 만들때 상태의 데이터가 원시의 타입이라면
+const[value,setValue] = useState(PRIMITIVE);
+string, number, bigint, boolean, undefined, symbol, null
+
+상태를 만들때 범객체라면
+const[value, setValue] = useState(Object);
+object, array,
+
+밸류를 복제한다.
+[Object]
+newValue = {...value}
+newValue 변경
+setValue(newValue)
+
+[Array]
+newValue = [...value]
+newValue 변경
+setValue(newValue)
+
+ex)
+const[value, setValue] = useState([1]);
+value.push(2);          newValue = [...value]
+setValue(value);        newValue.push(2);
+                        setValue(newValue);
+
+const[value, setValue] = useState(1);
+setValue(2);
