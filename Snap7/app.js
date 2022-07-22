@@ -1,9 +1,13 @@
 const express = require('express');
 const snap7 = require('node-snap7');
-
 const app = express();
-//word byte
-const arrWord = new Array(24);
+
+//constructor
+let arrWord = new Array();
+let arrBool = null;
+const wordLengh = 48;
+const boolLengh = 4;
+
 const s7client = new snap7.S7Client();
 
 app.set('views', __dirname + '/view')
@@ -13,7 +17,8 @@ app.engine('html', require('ejs').renderFile)
 app.get('/', (req, res) => {
     res.render('index', {
         name: '이문환',
-        array: arrWord
+        arrWord: arrWord,
+        arrBool: arrBool
     })
 })
 
@@ -40,33 +45,62 @@ function plcDisconnect() {
 
 function plcRead() {
 
-    s7client.DBRead(59, 0, 48, function (err, res) {
+    s7client.DBRead(59, 0, wordLengh, function (err, res) {
         if (err) 
             return console.log(
                 '>> DBRead Failed. Code #' + err + ' - ' + s7client.ErrorText(err)
             );
         
+        //생략된 0 채우는 중
         for (let i = 0; i < res.length / 2; i++) {
-            length = res.length / 2
-            arrWord[i] = res[i * 2 + 1];
+            //length = res.length / 2 arrWord[i] = res[i * 2 + 1];
+            arrWord[i] = [].concat(res[i * 2].toString(2), res[i * 2 + 1].toString(2));
+            arrWord[i] = arrWord[i].map(fillZero);
         }
-        console.log(res);
+        
+        console.log(arrWord);
+        
     });
-    
 
-    s7client.DBRead(59, 48, 1, function (err, res) {
+    s7client.DBRead(59, wordLengh, boolLengh, function (err, res) {
         if (err) 
             return console.log(
                 '>> DBRead Failed. Code #' + err + ' - ' + s7client.ErrorText(err)
             );
+        
+        //앞자리에 0 이있다면 생략하는 버그 고쳐야함
+        let arrBit = Array();
+        for (let i = 0; i < res.length; i++) {
+            const bin = res[i].toString(2);
 
-            console.log(res[0]);
+            arrBit.push(...bin.split("").reverse());
+        }
+        arrBool = arrBit.map(boolFromStringOtherwiseNull);
 
     });
 
-    // setTimeout( function() {
-    //     plcRead();
-    //     console.log("-----------------");
+    // setTimeout( function() {     plcRead();     console.log("-----------------");
     // }, 500 );
-    
+
 }
+
+//String to bool
+function boolFromStringOtherwiseNull(s) {
+    if (s == '1') 
+        return true
+    if (s == '0') 
+        return false
+    return null
+}
+
+function fillZero(data){
+    if (data.length !== 8){
+        zero = "0";
+        zeroLength = 8-data.length;
+        for (let i = 0; i < zeroLength; i++) {
+            data = zero + data;    
+        }
+    }
+    return data;
+}
+
