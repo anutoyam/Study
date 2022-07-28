@@ -4,28 +4,28 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Siemens Test</title>
-        <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
         
     </head>
     <body>
-        <div id="divv">
+        <div id="head">
             <h1>PLC TEST</h1>
             <h1><%=name %></h1>
-            <h1><%=arrWord %></h1>
-            <h1><%=arrBool %></h1>
+            <h1><%=data1 %></h1>
+            <h1><%=data2 %></h1>
         </div>
-        <div id="btn">
-            <button id = "btnBIT">48.0</button>
-        </div>
-        <!-- <script>
-            function refresh() {
-                    $("#divv").load(window.location.href + "#divv");
-                }
-            setTimeout(() => {
-                refresh();
-            }, 500);
-        </script> -->
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script>
+            setTimeout(reload, 1000);
+            function reload(){
+                $('#head').load(location.href + '#head');
+            }
+        </script>
 
+        <div id="body">
+            <h1><%=data2 %></h1>
+        </div>
+         
+        
     
     </body>
 </html>

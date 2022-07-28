@@ -46,7 +46,7 @@ function plcDisconnect() {
 
 function plcRead() {
 
-    s7client.DBRead(59, 0, wordLengh, function (err, res) {
+    s7client.DBRead(59, 0, 52, function (err, res) {
         if (err) 
             return console.log(
                 '>> DBRead Failed. Code #' + err + ' - ' + s7client.ErrorText(err)
@@ -66,18 +66,9 @@ function plcRead() {
                 arrWord[i] = arrWord[i] - 0x10000;
              }
         }
-        console.log(arrWord);
-    });
-
-    s7client.DBRead(59, wordLengh, boolLengh, function (err, res) {
-        if (err) 
-            return console.log(
-                '>> DBRead Failed. Code #' + err + ' - ' + s7client.ErrorText(err)
-            );
         
-        //앞자리에 0 이있다면 생략하는 버그 고쳐야함
         let arrBit = Array();
-        for (let i = 0; i < res.length; i++) {
+        for (let i = wordLengh; i < wordLengh+boolLengh; i++) {
             //3차 정리
             arrBool[i] = res[i].toString(2);
             arrBool[i] = fillZero(arrBool[i]);
@@ -97,7 +88,7 @@ function plcRead() {
         arrBool = arrBool.join('');
         arrBit= arrBool.split('')
         arrBool = arrBit.map(boolFromStringOtherwiseNull);
-        console.log(arrBool);
+        console.log(arrWord,arrBool);
     });
     // setTimeout( function() {     plcRead();     console.log("-----------------");
     // }, 500 );
