@@ -1,0 +1,12 @@
+#look {
+    width: 64px;
+    height: 64px;
+    background: url("https://studiomeal.com/data/code/images/mc_nolook_sample.png") no-repeat 0 0;
+    background-size: 640px 64px;
+    animation: no-look 750ms infinite steps(10);
+}
+@keyframes no-look {
+    100% {
+        background-position: -640px 0;
+    }
+}
