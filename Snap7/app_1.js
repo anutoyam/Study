@@ -1,7 +1,7 @@
 const {fileLoader} = require('ejs');
 const express = require('express');
-const plc = require("./plcCon.js")
-const DO = require("./dataobject.js");
+//const plc = require("./plcCon.js")
+//const DO = require("./dataobject.js");
 const fs = require("fs");
 
 const app = express();
@@ -30,8 +30,8 @@ app.listen(3000, function () {
 
 })
 
-plc.plcConnect();
-ReadPlc();
+// plc.plcConnect();
+// ReadPlc();
 
 async function ReadPlc() {
     try {

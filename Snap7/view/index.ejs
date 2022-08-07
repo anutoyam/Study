@@ -3,32 +3,20 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css"/>
         <title>Siemens Test</title>
     </head>
     <body>
-        <div id = "look">
+        <div class="container">
+            <header>OVER VIEW</header>
+            
+            <div id="head">
+                <h1>PLC TEST</h1>
+                <h1><%=name %></h1>
+                <h1><%=data1 %></h1>
+                <h1><%=data2 %></h1>
+            </div>
+        </div>
 
-        </div>
-        <div id="head">
-            <h1>PLC TEST</h1>
-            <h1><%=name %></h1>
-            <h1><%=data1 %></h1>
-            <h1><%=data2 %></h1>
-        </div>
-        <script src="http://code.jquery.com/jquery-latest.js"></script>
-        <!-- <script>
-            setTimeout(reload, 1000);
-            function reload(){
-                $('#head').load(location.href + '#head');
-            }
-        </script> -->
-
-        <div id="body">
-            <h1><%=data2 %></h1>
-        </div>
-         
-        
-    
     </body>
 </html>

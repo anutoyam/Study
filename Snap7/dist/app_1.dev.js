@@ -3,11 +3,9 @@
 var _require = require('ejs'),
     fileLoader = _require.fileLoader;
 
-var express = require('express');
+var express = require('express'); //const plc = require("./plcCon.js")
+//const DO = require("./dataobject.js");
 
-var plc = require("./plcCon.js");
-
-var DO = require("./dataobject.js");
 
 var fs = require("fs");
 
@@ -29,9 +27,8 @@ app.get('/', function (req, res) {
 });
 app.listen(3000, function () {
   console.log("port 3000");
-});
-plc.plcConnect();
-ReadPlc();
+}); // plc.plcConnect();
+// ReadPlc();
 
 function ReadPlc() {
   var time;
