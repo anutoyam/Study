@@ -8,15 +8,39 @@
     </head>
     <body>
         <div class="container">
-            <header>OVER VIEW</header>
-            
-            <div id="head">
-                <h1>PLC TEST</h1>
-                <h1><%=name %></h1>
-                <h1><%=data1 %></h1>
-                <h1><%=data2 %></h1>
+            <header>
+                <nav>
+                    <ul>
+                        <li>Crane</li>
+                        <li>Time</li>
+                    </ul>
+                    <ul>
+                        <li>Hoist</li>
+                        <li>Trolley</li>
+                        <li>Gantry</li>
+                    </ul>
+                </nav>
+                <main>OVER VIEW</main>
+                <aside>test</aside>
+            </header>
+            <div class="alarm"></div>
+            <div class="window">
+                <nav>
+                    <p>PLC TEST</p>
+                    <h1><%=name %></h1>
+                    <h1><%=data1 %></h1>
+                    <h1><%=data2 %></h1>
+                </nav>
+                <div class="graphic">
+                    <div class="bridge_wrapper">
+                        <!-- <div class="crane"></div> -->
+                        <div class="bridge"></div>
+                        <div class="bridge"></div>
+                    </div>
+                    
+                </div>
+
             </div>
         </div>
-
     </body>
 </html>
