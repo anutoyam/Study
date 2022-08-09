@@ -1,21 +1,19 @@
 body {
     display: flex;
 }
-.container{
+.frame {
     display: flex;
     flex-direction: column;
     width: 1920px;
-    height: 1060px;
-
-    /* width: 100%;
-    height: 100%; */
+    height: 955px;
+    /* border: 2px solid black; */
 }
-header{
+header {
     display: flex;
     height: 80px;
 }
-header nav{
-    width: 29%;     
+header nav {
+    width: 29%;
     display: flex;
     border: 6px solid black;
     background-color: gray;
@@ -24,24 +22,24 @@ header nav{
     flex-shrink: 0;
 }
 
-header nav ul{
+header nav ul {
+    display: flex;
     position: relative;
     top: -20px;
 }
 
-header main{
+header main {
     width: 40%;
     font-size: 30px;
     align-items: center;
     justify-content: center;
     display: flex;
-    border: 6px solid black;
+    border: 6px inset black;
     background-color: gray;
     border-radius: 20px;
-    box-shadow: rgba(0,0,0,0.4) 10px 10px inset;
-    flex-shrink: 0;
+
 }
-header aside{
+header aside {
     width: 29%;
     justify-content: center;
     display: flex;
@@ -51,7 +49,7 @@ header aside{
     box-shadow: rgba(0,0,0,0.4) 10px 10px inset;
     flex-shrink: 0;
 }
-.alarm{
+.alarm {
     width: 100%;
     height: 10%;
     margin-top: 10px;
@@ -59,36 +57,131 @@ header aside{
     background-color: lightgray;
 }
 
-.window{
+.window {
     display: flex;
     margin-top: 10px;
     width: 100%;
-    height: 60%;
+    height: 70%;
     border: 2px solid black;
     border-radius: 10px;
     background-color: lightgray;
 }
-.window nav{
+.window nav {
     position: absolute;
 }
-.graphic{
+.graphic {
     display: flex;
+    flex-direction: column;
     margin-left: 30%;
     width: 40%;
     height: 70%;
-    align-content: center;
     border: 2px dotted black;
 }
-.bridge_wrapper{
+/* Crane */
+.block {
+    width: 660px;
+    height: 447px;
+    flex-direction: column;
+    position: absolute;
+    top: 235px;
+    left: 601px;
+    /* border: 2px solid black; */
+
+}
+.crane_wrapper {
     width: 100%;
+    height: 100%;
+    animation: box-ani 3s linear forwards;
+}
+.trolley {
+    width: 60px;
+    height: 60px;
+    border: 2px solid black;
+    background-color: #ffffff;
+    opacity: 0.8;
+    background-size: 5px 5px;
+    background-image: repeating-linear-gradient(to right, #000000, #000000 1px, #ffffff 1px, #ffffff);
+}
+.rope {
+    width: 18px;
+    height: 40px;
+    margin-top: 32px;
+    margin-left: 28px;
+    border: 2px solid black;
+
+}
+.spreader {
+    width: 30px;
+    height: 10px;
+    margin-left: 22px;
+    border: 2px solid black;
+
+}
+.container {
+    width: 30px;
+    height: 30px;
+    margin-left: 22px;
+    border: 2px solid black;
+    background-color: silver;
+    background-image: linear-gradient(to right, maroon, maroon 3.5px, silver 3.5px, silver);
+    background-size: 4px 100%;
+}
+
+/* Girder  */
+.girder_wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 85px;
+    margin-left: 36px;
+}
+.girder {
+    width: 660px;
+    height: 30px;
+    display: flex;
+    border: 2px solid black;
+    background-color: darkgreen;
+    top: 30px;
+}
+.gantry_wrapper {
+    width: 664px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-end;
+
 }
-.bridge{
-    width: 50px;
-    height: 300px;
+.gantry {
+    width: 6px;
+    height: 25px;
+    display: flex;
+    border: 2px solid black;
+    background-color: #e86f00;
+    opacity: 0.8;
+    background-size: 5px 5px;
+    background-image: repeating-linear-gradient(45deg, #000000 0, #000000 1px, #e86f00 0, #e86f00 50%);
+    border-bottom-left-radius: 100%;
+    border-bottom-right-radius: 100%;
+}
+.bridge_wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bridge {
+    width: 40px;
+    height: 315px;
     border: 2px solid black;
     background-color: gray;
+}
+
+@keyframes box-ani {
+	from {
+		transform: translate(0, 0);
+	}
+	to {
+		transform: translate(580px, 0);
+	}
 }
