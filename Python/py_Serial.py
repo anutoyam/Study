@@ -1,5 +1,5 @@
 import serial
-ser = serial.Serial("COM9", 115200, timeout=1)  # COM 9에 115200으로 serial port open
+ser = serial.Serial("COM1", 115200, timeout=1)  # COM 9에 115200으로 serial port open
 
 while True:
     print("insert op :")
