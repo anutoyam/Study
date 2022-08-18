@@ -1,11 +1,5 @@
-from ast import arg
-from asyncio.windows_events import NULL
-from concurrent.futures import thread
-from socket import timeout
 import threading
 import serial
-import time
-import signal
 
 exitThread = False # 쓰레드 종료용 변수
 line = [] #라인 단위로 데이터 가져올 리스트 변수
@@ -37,8 +31,6 @@ def serial_recieve(ser) :
         rx = ser.read(18)
         print(rx.hex())
 #endregion
-
-
 
 
 ser = serial_connect('COM4')

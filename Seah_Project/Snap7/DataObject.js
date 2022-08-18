@@ -24,7 +24,7 @@ module.exports = {
             arrWord[i] = arrWord[i].join('');
             //bin을 dec로 변환
             arrWord[i] = parseInt(arrWord[i], 2);
-            //최상위 비트 확인 후 음수로 변경
+            //최상위 비트 확인 후 음수라면 음수로 변경
             if ((arrWord[i] & 0x8000) > 0) {
                 arrWord[i] = arrWord[i] - 0x10000;
             }

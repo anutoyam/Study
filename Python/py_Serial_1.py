@@ -1,18 +1,15 @@
-from ast import arg
-from asyncio.windows_events import NULL
-from concurrent.futures import thread
-from socket import timeout
+from posixpath import split
 import threading
 import serial
 import time
-import signal
+import atexit
 
 exitThread = False # 쓰레드 종료용 변수
 line = [] #라인 단위로 데이터 가져올 리스트 변수
 
 #region Function
 #시리얼 통신 접속
-def serial_connect(port, baudrate = 115200, bytesize = serial.EIGHTBITS, parity = serial.PARITY_EVEN, stopbits = serial.STOPBITS_ONE, timeout = 0) :
+def serial_connect(port, baudrate = 115200, bytesize = serial.EIGHTBITS, parity = serial.PARITY_EVEN, stopbits = serial.STOPBITS_ONE, timeout = 2) :
     ser = serial.Serial()
     ser.port = port
     ser.baudrate = baudrate
@@ -33,60 +30,40 @@ def serial_send(ser) :
     ser.write(serial.to_bytes(command))
 #시리얼 통신 Recieve
 def serial_recieve(ser) :
-    # 본코드
-    # rx = ser.readline()
-    # print(rx.hex())
+    atexit.register(handle_exit,ser)
+    while not exitThread :
+        rx = (ser.read(18)).hex()
+        rx = rx[20:32]
+        split_data = list(map(''.join, zip(*[iter(rx)]*2)))
+        print(split_data)
+        #return split_data
 
-    global line
-    global exitThread
-
-    # 쓰레드 종료될때까지 계속 돌림
-    while not exitThread:
-        #데이터가 있있다면
-        for c in ser.readline():
-            #line 변수에 차곡차곡 추가하여 넣는다.
-            line.append(chr(c))
-
-            if c == 10: #라인의 끝을 만나면..
-                #데이터 처리 함수로 호출
-                parsing_data(line)
-
-                #line 변수 초기화
-                del line[:]       
-
-def parsing_data(data):
-    # 리스트 구조로 들어 왔기 때문에
-    # 작업하기 편하게 스트링으로 합침
-    tmp = ''.join(data)
-
-    #출력!
-    print(tmp)
-
-#쓰레드 종료용 시그널 함수
-def handler(signum, frame):
-     exitThread = True
-
+def handle_exit(ser):
+    command = b'\xA5\x01\x84\x00\x00\x00\x2A'
+    ser.write(serial.to_bytes(command))
 #endregion
-
-
 
 
 ser = serial_connect('COM4')
 
 print("SPICA Sensor 스캔을 시작할까요?(Yes - 1, No - 2) : ")
+
 answer = input()
-if answer == '1' :
-    #종료 시그널 등록
-    signal.signal(signal.SIGINT, handler)
-    
-    #시리얼 통신 시작
-    ser.open()
-
-    #명령어 입력
-    #serial_send(ser)
-
-    #시리얼 읽을 쓰레드 생성
+if answer == '1' :   
+    if ser.isOpen() == False :
+        ser.open()
+        serial_send(ser)
+        
     thread = threading.Thread(target=serial_recieve, args=(ser,))
-
-    #시작!
     thread.start()
+elif answer == '2':
+    print("취소하셨습니다.")
+    ser.close()
+    if ser.isOpen() == False :
+        print("서버가 닫혔습니다.")
+    else :
+        print("안닫혔어요 확인점.")
+else :
+    print("1 또는 2로 입력 해 주세요 : ")
+    
+
