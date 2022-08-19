@@ -1,10 +1,12 @@
 from sys import byteorder
 import snap7
+import time
 
 s7client = snap7.client.Client()
 IP = '192.168.0.95'
 RACK = 0
 SLOT = 2
+exitReadThread = False
 
 def plcConnect() :
     s7client.connect(IP,RACK,SLOT)
@@ -16,12 +18,17 @@ def plcIsConnect() :
     status = s7client.get_connected()
     return status
 
-def plcDBRead() :
-    data = s7client.db_read(59,51,1)
-    bit = list('{0:08b}'.format(data[0]))[::-1]
-    return bit
+def plcDBRead(scanData) :
+    while not exitReadThread :
+        data = s7client.db_read(59,51,1)
+        bit = list('{0:08b}'.format(data[0]))[::-1]
+        if bit[7] == '1':
+            plcDBWrite(scanData)
+        time.sleep(0.5)
+        #return bit
 
 def plcDBWrite(value) :
+    value = get2Byte_int(value)
     s7client.db_write(59,0,value)
     
 
@@ -38,10 +45,10 @@ def getInt_2Byte(data) :
     value = (0x0000ff00 & (data[0] << 8) | (0x000000ff & data[1]))
     return value
 
-plcConnect()
-bit = plcDBRead()
-print(bit[7])
-print(get2Byte_int(1001))
+# plcConnect()
+# bit = plcDBRead()
+# print(bit[7])
+# print(get2Byte_int(1001))
 
 
 
