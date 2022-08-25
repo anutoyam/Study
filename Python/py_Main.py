@@ -1,4 +1,4 @@
-#import py_Serial_1
+import py_Serial_1
 import py_snap7
 import time
 import threading
@@ -25,23 +25,23 @@ if __name__ == '__main__' :
             print("PLC 연결 실패 다시 시도 해주세요")
             sys.exit(0)
 
-        # try  :
-        #     print("SPICA 와 연결을 시작합니다...")
-        #     ser = py_Serial_1.serial_connect()
-        #     time.sleep(1)
-        #     if py_Serial_1.serial_isconnect(ser) == True :
-        #         print("Sensor 연결 성공. 데이터 갱신 쓰레드 동작")
-        #         th_SPICARead = threading.Thread(target=py_Serial_1.serial_recieve , args=(ser,))
-        #         th_SPICARead.start()
-        # except :
-        #     print("Sensor 연결 실패 다시 시도 해주세요")
-        #     sys.exit(0)
+        try  :
+            print("SPICA 와 연결을 시작합니다...")
+            ser = py_Serial_1.serial_connect()
+            time.sleep(1)
+            if py_Serial_1.serial_isconnect(ser) == True :
+                print("Sensor 연결 성공. 데이터 갱신 쓰레드 동작")
+                th_SPICARead = threading.Thread(target=py_Serial_1.serial_recieve , args=(ser,))
+                th_SPICARead.start()
+        except :
+            print("Sensor 연결 실패 다시 시도 해주세요")
+            sys.exit(0)
 
 
-        # while True :
-        #     cycle += 1
-        #     print("사이클 : ", cycle)
-        #     time.sleep(2)
+        while True :
+            cycle += 1
+            print("사이클 : ", cycle)
+            time.sleep(2)
         
         # 통신중인지 확인하는 쓰레드. 나중에 추가
         # th_PlcisCon = threading.Thread(target=py_snap7.plcIsConnect, args=(bit,))

@@ -7,11 +7,11 @@ import time
 
 exitThread = False # 쓰레드 종료용 변수
 line = [] #라인 단위로 데이터 가져올 리스트 변수
-
+count = 0
 
 #region Function
 #시리얼 통신 접속
-def serial_connect(port = 'COM4', baudrate = 115200, bytesize = serial.EIGHTBITS, parity = serial.PARITY_EVEN, stopbits = serial.STOPBITS_ONE, timeout = 1) :
+def serial_connect(port = 'COM4', baudrate = 115200, bytesize = serial.EIGHTBITS, parity = serial.PARITY_EVEN, stopbits = serial.STOPBITS_ONE, timeout = 0.1) :
     ser = serial.Serial()
     ser.port = port
     ser.baudrate = baudrate
@@ -39,16 +39,20 @@ def serial_send(ser) :
     ser.write(serial.to_bytes(command))
 #시리얼 통신 Recieve
 def serial_recieve(ser) :
-    serial_send(ser)
-    rx = ser.read(7)
-    rx = NULL
-    while not exitThread :
-        rx = (ser.read(18)).hex()
-        #rx = rx[20:32]
-        split_data = list(map(''.join, zip(*[iter(rx)]*2)))
-        print(split_data)
+    rx = ser.readline()
+    print("데이터는 : " ,rx)
+    # while not exitThread :
         
-        #return split_data  
+    #     #rx = (ser.read(18)).hex()
+    #     rx = ser.readline()
+    #     # #rx = rx[20:32]
+    #     # split_data = list(map(''.join, zip(*[iter(rx)]*2)))
+    #     # print(split_data)
+        
+        
+    #     print("데이터는 : " ,rx)
+        
+        
 
 def handle_exit(ser):
     command = b'\xA5\x01\x84\x00\x00\x00\x2A'
@@ -66,8 +70,8 @@ answer = input()
 if answer == '1' :   
     if ser.isOpen() == False :
         ser.open()
-        serial_send(ser)
-
+        
+    #serial_send(ser)
     thread = threading.Thread(target=serial_recieve, args=(ser,))
     thread.start()
 elif answer == '2':
