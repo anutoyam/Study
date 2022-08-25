@@ -1,4 +1,4 @@
-import py_Serial_1
+#import py_Serial_1
 import py_snap7
 import time
 import threading
@@ -6,7 +6,7 @@ import sys
 
 bit = []
 cycle = 0
-data = 200
+data = [200,400,600]
 
 if __name__ == '__main__' :
     print("SPICA Sensor 스캔을 시작 하시겠습니까? (Yes - 1 , No - 2)")

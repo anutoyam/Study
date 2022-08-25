@@ -22,8 +22,10 @@ def plcDBRead(scanData) :
     while not exitReadThread :
         data = s7client.db_read(59,51,1)
         bit = list('{0:08b}'.format(data[0]))[::-1]
-        if bit[7] == '1':
-            plcDBWrite(scanData)
+        if bit[6] == '1':
+            if bit[7] == '0':
+                plcDBWrite(scanData)
+                print(bit)
         time.sleep(0.5)
         #return bit
 
@@ -32,11 +34,19 @@ def plcDBWrite(value) :
     s7client.db_write(59,0,value)
     
 
-#int를 2byte로 바꾸는 코드
+# #int를 2byte로 바꾸는 코드(구 코드)
+# def get2Byte_int(data) :
+#     convertBytes = bytearray(2)
+#     convertBytes[0] = ((data >> 8) & 0x000000ff)
+#     convertBytes[1] = (data & 0x000000ff)
+#     return convertBytes
+#int를 2byte로 바꾸는 코드 (신 코드)
 def get2Byte_int(data) :
-    convertBytes = bytearray(2)
-    convertBytes[0] = ((data >> 8) & 0x000000ff)
-    convertBytes[1] = (data & 0x000000ff)
+    data_len = len(data)
+    convertBytes = bytearray(data_len*2)
+    for i in range(data_len) :
+        convertBytes[i*2] = ((data[i] >> 8) & 0x000000ff)
+        convertBytes[i*2+1] = (data[i] & 0x000000ff)
     return convertBytes
 #2byte를 int로 바꾸는 코드
 def getInt_2Byte(data) :
