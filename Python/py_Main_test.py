@@ -1,5 +1,5 @@
 #import py_Serial_1
-import py_snap7
+import py_snap7_1
 from concurrent.futures import thread
 import threading
 import time
@@ -18,8 +18,8 @@ fig = plt.figure()
 ax = plt.axes(xlim=(0, 127), ylim=(0, 255))
 line, = ax.plot([], [], lw=3)
 
-def animate(i):
-    Ydata = np.random.randint(low = 0, high = 255, size = 128)
+def animate(data):
+    Ydata = py_snap7_1.plcDBRead()
     
     x = np.linspace(0,127,128)
     y = (Ydata)
@@ -33,12 +33,16 @@ if __name__ == '__main__' :
     if answer == '1' :   
         try :
             print("PLC 와 연결을 시작합니다...")
-            py_snap7.plcConnect()
+            py_snap7_1.plcConnect()
             time.sleep(1)
-            if py_snap7.plcIsConnect() == True :
-                print("PLC 연결 성공. 데이터 갱신 쓰레드 동작")
-                th_PlcRead = threading.Thread(target=py_snap7.plcDBRead, args=(data,))
-                th_PlcRead.start()  
+            if py_snap7_1.plcIsConnect() == True :
+                print("PLC 연결 성공. 데이터 갱신 동작")
+                # th_PlcRead = threading.Thread(target=py_snap7_1.plcDBRead, args=(data,))
+                # th_PlcRead.start()  
+                while True :
+                    data = py_snap7_1.plcDBRead()
+                    print(data)
+                    time.sleep(1)
         except :
             print("PLC 연결 실패 다시 시도 해주세요")
             sys.exit(0)
@@ -55,9 +59,9 @@ if __name__ == '__main__' :
     #         print("Sensor 연결 실패 다시 시도 해주세요")
     #         sys.exit(0)
         
-        anim = FuncAnimation(fig, animate, frames=200, interval=100)
+        # anim = FuncAnimation(fig, animate, frames=230, interval=100)
 
-        plt.show()
+        # plt.show()
 
         while True :
             cycle += 1
