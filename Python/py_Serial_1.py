@@ -7,7 +7,7 @@ import time
 
 exitThread = False # 쓰레드 종료용 변수
 line = [] #라인 단위로 데이터 가져올 리스트 변수
-count = 0
+
 
 #region Function
 #시리얼 통신 접속
@@ -30,27 +30,28 @@ def serial_isconnect(ser) :
 def serial_send(ser) :
     #cancel measure
     # command = b'\xA5\x01\x84\x00\x00\x00\x2A'
-    # ser.write(serial.to_bytes(command))
-    
     #period SYNC
-    command = b'\xA5\x01\x83\x01\x00\x00\x2A'
+    #command = b'\xA5\x01\x83\x01\x00\x00\x2A'
     #period ASYNC
     #command = b'\xA5\x01\x83\x03\x00\x00\x2C'
+    # one shot
+    command = b'\xA5\x01\x83\x00\x00\x00\x29'
+    ser.write(serial.to_bytes(command))
+    time.sleep(0.1)
+    # read buffer
+    command = b'\xA5\x01\x92\x00\x00\x00\x38'
     ser.write(serial.to_bytes(command))
 #시리얼 통신 Recieve
 def serial_recieve(ser) :
+    serial_send(ser)
     rx = ser.readline()
-    print("데이터는 : " ,rx)
-    # while not exitThread :
-        
-    #     #rx = (ser.read(18)).hex()
-    #     rx = ser.readline()
-    #     # #rx = rx[20:32]
-    #     # split_data = list(map(''.join, zip(*[iter(rx)]*2)))
-    #     # print(split_data)
-        
-        
-    #     print("데이터는 : " ,rx)
+    # #rx = rx[20:32]
+    # split_data = list(map(''.join, zip(*[iter(rx)]*2)))
+    # print(split_data)
+    splitRX = rx[11:139]
+
+    
+    return splitRX
         
         
 
@@ -63,25 +64,25 @@ def handle_exit(ser):
 
 
 
-print("SPICA Sensor 스캔을 시작할까요?(Yes - 1, No - 2) : ")
-ser = serial_connect()
+# print("SPICA Sensor 스캔을 시작할까요?(Yes - 1, No - 2) : ")
+# ser = serial_connect()
 
-answer = input()
-if answer == '1' :   
-    if ser.isOpen() == False :
-        ser.open()
+# answer = input()
+# if answer == '1' :   
+#     if ser.isOpen() == False :
+#         ser.open()
         
-    #serial_send(ser)
-    thread = threading.Thread(target=serial_recieve, args=(ser,))
-    thread.start()
-elif answer == '2':
-    print("취소하셨습니다.")
-    ser.close()
-    if ser.isOpen() == False :
-        print("서버가 닫혔습니다.")
-    else :
-        print("안닫혔어요 확인점.")
-else :
-    print("1 또는 2로 입력 해 주세요 : ")
+#     #serial_send(ser)
+#     thread = threading.Thread(target=serial_recieve, args=(ser,))
+#     thread.start()
+# elif answer == '2':
+#     print("취소하셨습니다.")
+#     ser.close()
+#     if ser.isOpen() == False :
+#         print("서버가 닫혔습니다.")
+#     else :
+#         print("안닫혔어요 확인점.")
+# else :
+#     print("1 또는 2로 입력 해 주세요 : ")
     
 

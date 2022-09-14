@@ -14,6 +14,7 @@ bit = []
 cycle = 0
 data = []
 
+
 fig = plt.figure()
 ax = plt.axes(xlim=(0, 127), ylim=(0, 255))
 line, = ax.plot([], [], lw=3)
@@ -24,6 +25,7 @@ def animate(data):
     x = np.linspace(0,127,128)
     y = (Ydata)
     line.set_data(x, y)
+
     return line,
 
 if __name__ == '__main__' :
@@ -39,10 +41,10 @@ if __name__ == '__main__' :
                 print("PLC 연결 성공. 데이터 갱신 동작")
                 # th_PlcRead = threading.Thread(target=py_snap7_1.plcDBRead, args=(data,))
                 # th_PlcRead.start()  
-                while True :
-                    data = py_snap7_1.plcDBRead()
-                    print(data)
-                    time.sleep(1)
+                # while True :
+                #     data = py_snap7_1.plcDBRead()
+                #     print(data)
+                #     time.sleep(1)
         except :
             print("PLC 연결 실패 다시 시도 해주세요")
             sys.exit(0)
@@ -59,9 +61,9 @@ if __name__ == '__main__' :
     #         print("Sensor 연결 실패 다시 시도 해주세요")
     #         sys.exit(0)
         
-        # anim = FuncAnimation(fig, animate, frames=230, interval=100)
+        anim = FuncAnimation(fig, animate, frames = 200, interval=500)
 
-        # plt.show()
+        plt.show()
 
         while True :
             cycle += 1
