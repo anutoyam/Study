@@ -1,11 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
+from matplotlib.widgets import Slider, Button, RadioButtons
 
-
-fig = plt.figure()
+fig = plt.subplot()
+plt.subplots_adjust(left=0.25, bottom=0.25)
+axcolor = 'lightgoldenrodyellow'
 ax = plt.axes(xlim=(0, 127), ylim=(0, 255))
-line, = ax.plot([], [], lw=3)
+line, = ax.plot([], [], lw=3, color = 'red')
 
 
 def animate(i):
@@ -17,36 +19,17 @@ def animate(i):
     return line,
 
 
-# anim = FuncAnimation(fig, animate, frames=200, interval=50)
-anim = FuncAnimation(fig, animate, frames=200, interval=100)
+# anim = FuncAnimation(fig, animate, frames=200, interval=100)
+
+
+''' Add RadioButtons '''
+radio = RadioButtons(ax, ('red', 'blue', 'green'), active=0)
+# axes(rect) -> rect : left, bottom, width, height
+
+def colorfunc(label):
+    line.set_color(label)
+    fig.canvas.draw_idle()
+radio.on_clicked(colorfunc)
 
 plt.show()
 
-
-# window.mainloop()
-
-
-#data = [200,400,600]
-
-# #int를 2byte로 바꾸는 코드
-# def get2Byte_int(data) :
-#     data_len = len(data)
-#     convertBytes = bytearray(data_len*2)
-#     for i in range(data_len) :
-#         convertBytes[i*2] = ((data[i] >> 8) & 0x000000ff)
-#         convertBytes[i*2+1] = (data[i] & 0x000000ff)
-#     return convertBytes
-
-
-
-# #int를 2byte로 바꾸는 코드
-# def get2Byte_int(data) :
-#     data_len = len(data)
-#     convertBytes = bytearray(data_len*2)
-#     for i in range(data_len) :
-#         convertBytes[0] = ((data[data_len-1] >> 8) & 0x000000ff)
-#         convertBytes[1] = (data[data_len-1] & 0x000000ff)
-#         print(i)
-        
-    
-#     return convertBytes

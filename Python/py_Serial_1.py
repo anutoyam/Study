@@ -21,6 +21,7 @@ def serial_connect(port = 'COM4', baudrate = 115200, bytesize = serial.EIGHTBITS
     ser.timeout = timeout
     ser.open()
     return ser
+
 #시리얼 통신 확인
 def serial_isconnect(ser) :
     status = ser.isOpen()
@@ -41,6 +42,7 @@ def serial_send(ser) :
     # read buffer
     command = b'\xA5\x01\x92\x00\x00\x00\x38'
     ser.write(serial.to_bytes(command))
+
 #시리얼 통신 Recieve
 def serial_recieve(ser) :
     serial_send(ser)
@@ -49,20 +51,15 @@ def serial_recieve(ser) :
     # split_data = list(map(''.join, zip(*[iter(rx)]*2)))
     # print(split_data)
     splitRX = rx[11:139]
-
-    
     return splitRX
         
-        
-
 def handle_exit(ser):
     command = b'\xA5\x01\x84\x00\x00\x00\x2A'
     ser.write(serial.to_bytes(command))
 
 #endregion
 
-
-
+#region Debug용 코드
 
 # print("SPICA Sensor 스캔을 시작할까요?(Yes - 1, No - 2) : ")
 # ser = serial_connect()
@@ -85,4 +82,4 @@ def handle_exit(ser):
 # else :
 #     print("1 또는 2로 입력 해 주세요 : ")
     
-
+#endregion
