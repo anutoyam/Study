@@ -11,13 +11,24 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.widgets import Slider, Button, RadioButtons
 
 bit = []
-cycle = 0
 data = []
-
+cycle = 0
+buffer = []
+exitThread = False
 
 fig = plt.figure()
 ax = plt.axes(xlim=(0, 127), ylim=(0, 255))
 line, = ax.plot([], [], lw=3)
+
+def buf_stacking(ser) :
+    global buffer
+    buffer = []
+    while not exitThread :
+        data = py_Serial_1.serial_recieve(ser)
+        buffer.append(data)
+        print(buffer)
+        time.sleep(3)
+
 
 def animate(data):
     data = py_Serial_1.serial_recieve(ser)
@@ -55,15 +66,15 @@ if __name__ == '__main__' :
             time.sleep(1)
             if py_Serial_1.serial_isconnect(ser) == True :
                 print("Sensor 연결 성공. 데이터 갱신 쓰레드 동작")
-                # th_SPICARead = threading.Thread(target=py_Serial_1.serial_recieve , args=(ser,))
-                # th_SPICARead.start()
+                th_SPICARead = threading.Thread(target=buf_stacking , args=(ser,))
+                th_SPICARead.start()
         except :
             print("Sensor 연결 실패 다시 시도 해주세요")
             sys.exit(0)
         
-        anim = FuncAnimation(fig, animate, frames = 200, interval=300)
+        # anim = FuncAnimation(fig, animate, frames = 200, interval=300)
 
-        plt.show()
+        # plt.show()
 
         while True :
             cycle += 1
