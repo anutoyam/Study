@@ -28,30 +28,32 @@ def serial_isconnect(ser) :
     return status
 
 #시리얼 통신 Send
-def serial_send(ser) :
+def serial_send(ser,label : str) :
     #cancel measure
     # command = b'\xA5\x01\x84\x00\x00\x00\x2A'
     #period SYNC
     #command = b'\xA5\x01\x83\x01\x00\x00\x2A'
     #period ASYNC
     #command = b'\xA5\x01\x83\x03\x00\x00\x2C'
-    # one shot
-    command = b'\xA5\x01\x83\x00\x00\x00\x29'
-    ser.write(serial.to_bytes(command))
-    time.sleep(0.1)
-    # read buffer
-    command = b'\xA5\x01\x92\x00\x00\x00\x38'
-    ser.write(serial.to_bytes(command))
+    if label == "UNPROCESSED" :
+        #UNPROCESSED one shot
+        command = b'\xA5\x01\x83\x00\x00\x00\x29'
+        ser.write(serial.to_bytes(command))
+        time.sleep(0.1)
+        # read buffer
+        command = b'\xA5\x01\x92\x00\x00\x00\x38'
+        ser.write(serial.to_bytes(command))
 
 #시리얼 통신 Recieve
-def serial_recieve(ser) :
-    serial_send(ser)
-    rx = ser.readline()
-    # #rx = rx[20:32]
-    # split_data = list(map(''.join, zip(*[iter(rx)]*2)))
-    # print(split_data)
-    splitRX = rx[11:139]
-    return splitRX
+def serial_recieve(ser,label) :
+    if label == "UNPROCESSED" :
+        serial_send(ser,"UNPROCESSED")
+        rx = ser.readline()
+        # #rx = rx[20:32]
+        # split_data = list(map(''.join, zip(*[iter(rx)]*2)))
+        # print(split_data)
+        splitRX = rx[11:139]
+        return splitRX
         
 def handle_exit(ser):
     command = b'\xA5\x01\x84\x00\x00\x00\x2A'

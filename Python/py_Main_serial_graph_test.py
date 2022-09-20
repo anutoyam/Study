@@ -16,11 +16,12 @@ data = []
 
 
 fig = plt.figure()
+plt.subplots_adjust(left=0.35)
 ax = plt.axes(xlim=(0, 127), ylim=(0, 255))
 line, = ax.plot([], [], lw=3)
 
-def animate(data):
-    # data = py_Serial_1.serial_recieve(ser)
+def animate(label):
+    data = py_Serial_1.serial_recieve(ser,label)
     Ydata = list(data)
     x = np.linspace(0,127,128)
     y = (Ydata)
@@ -28,9 +29,15 @@ def animate(data):
 
     return line,
 
-''' Add Button '''
-resetax = plt.axes([0.8, 0.025, 0.1, 0.04])
-button = Button(resetax, 'Reset', color='lightyellow', hovercolor='0.975')
+def btnfunc(label):
+    anim = FuncAnimation(fig, animate, label, interval=300)
+    # animate(label)
+
+''' Add RadioButtons '''
+
+rax = plt.axes([0.025, 0.5, 0.25, 0.15])
+radio = RadioButtons(rax, ('UNPROCESSED', 'LOWER', 'DERIVATIVE','MEASURE'), active=0)
+
 
 if __name__ == '__main__' :
     print("SPICA Sensor 스캔을 시작 하시겠습니까? (Yes - 1 , No - 2)")
@@ -53,19 +60,20 @@ if __name__ == '__main__' :
         #     print("PLC 연결 실패 다시 시도 해주세요")
         #     sys.exit(0)
 
-        # try  :
-        #     print("SPICA 와 연결을 시작합니다...")
-        #     ser = py_Serial_1.serial_connect()
-        #     time.sleep(1)
-        #     if py_Serial_1.serial_isconnect(ser) == True :
-        #         print("Sensor 연결 성공. 데이터 갱신 쓰레드 동작")
-        #         # th_SPICARead = threading.Thread(target=py_Serial_1.serial_recieve , args=(ser,))
-        #         # th_SPICARead.start()
-        # except :
-        #     print("Sensor 연결 실패 다시 시도 해주세요")
-        #     sys.exit(0)
+        try  :
+            print("SPICA 와 연결을 시작합니다...")
+            ser = py_Serial_1.serial_connect()
+            time.sleep(1)
+            if py_Serial_1.serial_isconnect(ser) == True :
+                print("Sensor 연결 성공. 데이터 갱신 쓰레드 동작")
+                # th_SPICARead = threading.Thread(target=py_Serial_1.serial_recieve , args=(ser,))
+                # th_SPICARead.start()
+        except :
+            print("Sensor 연결 실패 다시 시도 해주세요")
+            sys.exit(0)
         
-        anim = FuncAnimation(fig, animate, frames = 200, interval=300)
+        radio.on_clicked(btnfunc)
+        # anim = FuncAnimation(fig, animate, frames = 200, interval=300)
 
         plt.show()
 
