@@ -1,3 +1,6 @@
+from ast import Num
+from glob import glob
+from pickle import NONE
 import py_Serial_1
 #import py_snap7_1
 from concurrent.futures import thread
@@ -13,15 +16,19 @@ from matplotlib.widgets import Slider, Button, RadioButtons
 bit = []
 cycle = 0
 data = []
-
+status = True
+profile = 1
 
 fig = plt.figure()
 plt.subplots_adjust(left=0.35)
 ax = plt.axes(xlim=(0, 127), ylim=(0, 255))
 line, = ax.plot([], [], lw=3)
+anim = None
 
-def animate(label):
-    data = py_Serial_1.serial_recieve(ser,label)
+def animate(event):
+    
+    global profile
+    data = py_Serial_1.serial_recieve(ser,profile)
     Ydata = list(data)
     x = np.linspace(0,127,128)
     y = (Ydata)
@@ -30,14 +37,34 @@ def animate(label):
     return line,
 
 def btnfunc(label):
-    anim = FuncAnimation(fig, animate, label, interval=300)
-    # animate(label)
+    global status, ax, anim, profile
+    # print(label.inaxes._children[0]._text)
+    if status == True :
+        anim.event_source.stop()
+        status = False
+    else : 
+        anim.event_source.start()
+        status = True
+        if label.inaxes._children[0]._text == 'UNPROCESSED' : 
+            profile = 1
+            print(profile)
+        elif label.inaxes._children[0]._text == 'LOWER' : 
+            profile = 2
+            print(profile)
+        elif label.inaxes._children[0]._text == 'DERIVATIVE' : 
+            profile = 3
+            print(profile)
 
-''' Add RadioButtons '''
 
-rax = plt.axes([0.025, 0.5, 0.25, 0.15])
-radio = RadioButtons(rax, ('UNPROCESSED', 'LOWER', 'DERIVATIVE','MEASURE'), active=0)
+# ''' Add Button '''
+resetax1 = plt.axes([0.05, 0.8, 0.2, 0.04])
+btnUNPROCESSED = Button(resetax1, label= 'UNPROCESSED', color="lightgray", hovercolor='0.975')
 
+resetax2 = plt.axes([0.05, 0.7, 0.2, 0.04])
+btnLOWER = Button(resetax2, label= 'LOWER', color="lightgray", hovercolor='0.975')
+
+resetax3 = plt.axes([0.05, 0.6, 0.2, 0.04])
+btnDERIVATIVE = Button(resetax3, label= 'DERIVATIVE', color="lightgray", hovercolor='0.975')
 
 if __name__ == '__main__' :
     print("SPICA Sensor 스캔을 시작 하시겠습니까? (Yes - 1 , No - 2)")
@@ -72,9 +99,11 @@ if __name__ == '__main__' :
             print("Sensor 연결 실패 다시 시도 해주세요")
             sys.exit(0)
         
-        radio.on_clicked(btnfunc)
-        # anim = FuncAnimation(fig, animate, frames = 200, interval=300)
-
+        btnUNPROCESSED.on_clicked(btnfunc)
+        btnLOWER.on_clicked(btnfunc)
+        btnDERIVATIVE.on_clicked(btnfunc)
+        
+        anim = FuncAnimation(fig, animate, interval=1000)
         plt.show()
 
         while True :

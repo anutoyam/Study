@@ -11,7 +11,7 @@ line = [] #라인 단위로 데이터 가져올 리스트 변수
 
 #region Function
 #시리얼 통신 접속
-def serial_connect(port = 'COM4', baudrate = 115200, bytesize = serial.EIGHTBITS, parity = serial.PARITY_EVEN, stopbits = serial.STOPBITS_ONE, timeout = 0.1) :
+def serial_connect(port = 'COM4', baudrate = 115200, bytesize = serial.EIGHTBITS, parity = serial.PARITY_EVEN, stopbits = serial.STOPBITS_ONE, timeout = None) :
     ser = serial.Serial()
     ser.port = port
     ser.baudrate = baudrate
@@ -28,33 +28,40 @@ def serial_isconnect(ser) :
     return status
 
 #시리얼 통신 Send
-def serial_send(ser,label : str) :
+def serial_send(ser,num) :
+    #Frame Reset
+    #command = b'\xA5\x01\x80\x00\x00\x00\x26'
     #cancel measure
     # command = b'\xA5\x01\x84\x00\x00\x00\x2A'
-    #period SYNC
-    #command = b'\xA5\x01\x83\x01\x00\x00\x2A'
-    #period ASYNC
-    #command = b'\xA5\x01\x83\x03\x00\x00\x2C'
-    if label == "UNPROCESSED" :
-        #UNPROCESSED one shot
-        command = b'\xA5\x01\x83\x00\x00\x00\x29'
-        ser.write(serial.to_bytes(command))
-        time.sleep(0.1)
-        # read buffer
+    #one shot
+    command = b'\xA5\x01\x83\x00\x00\x00\x29'
+    ser.write(serial.to_bytes(command))
+    time.sleep(0.1)
+    if num == 1 :
+        #UNPROCESSED read buffer
         command = b'\xA5\x01\x92\x00\x00\x00\x38'
-        ser.write(serial.to_bytes(command))
+        ser.write(serial.to_bytes(command)) 
+    elif num == 2 :
+        #LOWER read buffer
+        command = b'\xA5\x01\x92\x01\x00\x00\x39'
+        ser.write(serial.to_bytes(command)) 
+    elif num == 3 :
+        #DERIVATIVE read buffer
+        command = b'\xA5\x01\x92\x02\x00\x00\x3A'
+        ser.write(serial.to_bytes(command)) 
 
 #시리얼 통신 Recieve
-def serial_recieve(ser,label) :
-    if label == "UNPROCESSED" :
-        serial_send(ser,"UNPROCESSED")
-        rx = ser.readline()
-        # #rx = rx[20:32]
-        # split_data = list(map(''.join, zip(*[iter(rx)]*2)))
-        # print(split_data)
-        splitRX = rx[11:139]
-        return splitRX
-        
+def serial_recieve(ser,profile) :
+    serial_send(ser,profile)
+    rx = ser.read(140)
+    # #rx = rx[20:32]
+    # split_data = list(map(''.join, zip(*[iter(rx)]*2)))
+    # print(split_data)
+    splitRX = rx[11:139]
+    # print(splitRX)
+    
+    return splitRX
+    
 def handle_exit(ser):
     command = b'\xA5\x01\x84\x00\x00\x00\x2A'
     ser.write(serial.to_bytes(command))
