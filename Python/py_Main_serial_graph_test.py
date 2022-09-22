@@ -1,3 +1,4 @@
+#region import
 from ast import Num
 from glob import glob
 from pickle import NONE
@@ -11,7 +12,11 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
-from matplotlib.widgets import Slider, Button, RadioButtons
+from matplotlib.widgets import Button
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+import tkinter as tk
+#endregion
 
 bit = []
 cycle = 0
@@ -22,8 +27,9 @@ profile = 1
 fig = plt.figure()
 plt.subplots_adjust(left=0.35)
 ax = plt.axes(xlim=(0, 127), ylim=(0, 255))
-line, = ax.plot([], [], lw=3)
+line, = ax.plot([], [], lw=1)
 anim = None
+root = tk.Tk()
 
 def animate(event):
     
@@ -43,28 +49,41 @@ def btnfunc(label):
         anim.event_source.stop()
         status = False
     else : 
-        anim.event_source.start()
         status = True
         if label.inaxes._children[0]._text == 'UNPROCESSED' : 
             profile = 1
-            print(profile)
         elif label.inaxes._children[0]._text == 'LOWER' : 
             profile = 2
-            print(profile)
         elif label.inaxes._children[0]._text == 'DERIVATIVE' : 
             profile = 3
-            print(profile)
+        
+        anim.event_source.start()
 
 
 # ''' Add Button '''
-resetax1 = plt.axes([0.05, 0.8, 0.2, 0.04])
+# Period BTN
+resetax1 = plt.axes([0.05, 0.75, 0.2, 0.04])
 btnUNPROCESSED = Button(resetax1, label= 'UNPROCESSED', color="lightgray", hovercolor='0.975')
-
 resetax2 = plt.axes([0.05, 0.7, 0.2, 0.04])
 btnLOWER = Button(resetax2, label= 'LOWER', color="lightgray", hovercolor='0.975')
-
-resetax3 = plt.axes([0.05, 0.6, 0.2, 0.04])
+resetax3 = plt.axes([0.05, 0.65, 0.2, 0.04])
 btnDERIVATIVE = Button(resetax3, label= 'DERIVATIVE', color="lightgray", hovercolor='0.975')
+resetax4 = plt.axes([0.05, 0.6, 0.2, 0.04])
+btnDERIVATIVE = Button(resetax4, label= 'MEASURE', color="lightgray", hovercolor='0.975')
+# OneShot BTN
+resetax5 = plt.axes([0.05, 0.3, 0.2, 0.04])
+btnUNPROCESSED = Button(resetax5, label= 'UNPROCESSED', color="lightgray", hovercolor='0.975')
+resetax6 = plt.axes([0.05, 0.25, 0.2, 0.04])
+btnLOWER = Button(resetax6, label= 'LOWER', color="lightgray", hovercolor='0.975')
+resetax7 = plt.axes([0.05, 0.2, 0.2, 0.04])
+btnDERIVATIVE = Button(resetax7, label= 'DERIVATIVE', color="lightgray", hovercolor='0.975')
+resetax8 = plt.axes([0.05, 0.15, 0.2, 0.04])
+btnDERIVATIVE = Button(resetax8, label= 'MEASURE', color="lightgray", hovercolor='0.975')
+
+# '''TEXT BOX'''
+mybox = {'facecolor':'y','edgecolor':'r','boxstyle':'round','alpha':0.5}
+plt.text(0.05,17.2,('Period Scan'),fontsize = 11, bbox=mybox)
+plt.text(0.05,6,('OneShot Scan'),fontsize = 11, bbox=mybox)
 
 if __name__ == '__main__' :
     print("SPICA Sensor 스캔을 시작 하시겠습니까? (Yes - 1 , No - 2)")
@@ -99,18 +118,20 @@ if __name__ == '__main__' :
             print("Sensor 연결 실패 다시 시도 해주세요")
             sys.exit(0)
         
-        btnUNPROCESSED.on_clicked(btnfunc)
-        btnLOWER.on_clicked(btnfunc)
-        btnDERIVATIVE.on_clicked(btnfunc)
+        # btnUNPROCESSED.on_clicked(btnfunc)
+        # btnLOWER.on_clicked(btnfunc)
+        # btnDERIVATIVE.on_clicked(btnfunc)
         
-        anim = FuncAnimation(fig, animate, interval=1000)
-        plt.show()
+        
+        # plt.show()
+        label = tk.Label(root,text="라벨").grid(column=0, row=1)
+        canvas = FigureCanvasTkAgg(fig, master=root) 
+        canvas.get_tk_widget().grid(column=0,row=0) 
 
-        while True :
-            cycle += 1
-            print("사이클 : ", cycle)
-            time.sleep(2)
-        
+        anim = FuncAnimation(fig, animate, interval=500)
+
+        tk.mainloop()
+
         # 통신중인지 확인하는 쓰레드. 나중에 추가
         # th_PlcisCon = threading.Thread(target=py_snap7.plcIsConnect, args=(bit,))
         # th_PlcisCon.start()

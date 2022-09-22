@@ -1,101 +1,63 @@
-# import numpy as np
-# import matplotlib.pyplot as plt
-# from matplotlib.widgets import Slider, Button, RadioButtons
+from matplotlib import pyplot as plt
+from matplotlib import animation
+import numpy as np
+import random
+import time
+#
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+import tkinter as Tk
 
-# fig = plt.figure()
-# plt.subplots_adjust(left=0.25, bottom=0.25)
-
-# t = np.arange(0.0, 1.0, 0.001)
-# a0 = 5
-# f0 = 3
-# s = a0*np.sin(2*np.pi*f0*t)
-# l, = plt.plot(t, s, lw=2, color='red')
-
-# plt.axis([0, 1, -10, 10])
-# axcolor = 'lightgoldenrodyellow'
-
-# ''' Add Slider '''
-
-# axfreq = plt.axes([0.25, 0.1, 0.65, 0.03])
-# axamp = plt.axes([0.25, 0.15, 0.65, 0.03])
-# # axes(rect) -> rect : left, bottom, width, height
-
-# sfreq = Slider(axfreq, 'Freq', 0.1, 30.0, valinit=f0)
-# samp = Slider(axamp, 'Amp', 0.1, 10.0, valinit=a0)
-
-# def update(val):
-#     amp = samp.val
-#     freq = sfreq.val
-#     l.set_ydata(amp*np.sin(2*np.pi*freq*t))
-#     fig.canvas.draw_idle()
-
-# sfreq.on_changed(update)
-# samp.on_changed(update)
-
-# ''' Add RadioButtons '''
-
-# rax = plt.axes([0.025, 0.5, 0.15, 0.15])
-# radio = RadioButtons(rax, ('red', 'blue', 'green'), active=0)
-
-# def colorfunc(label):
-#     l.set_color(label)
-#     fig.canvas.draw_idle()
-# radio.on_clicked(colorfunc)
-
-# ''' Add Button '''
-# resetax = plt.axes([0.8, 0.025, 0.1, 0.04])
-# button = Button(resetax, 'Reset', color=axcolor, hovercolor='0.975')
-
-# def reset(event):
-#     sfreq.reset()
-#     samp.reset()
-# button.on_clicked(reset)
+fig = plt.figure()     #figure(도표) 생성
 
 
-# plt.show()
 
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
-from matplotlib.widgets import Button
+ax = plt.subplot(211, xlim=(0, 50), ylim=(0, 1024))
+ax_2 = plt.subplot(212, xlim=(0, 50), ylim=(0, 512))
 
-x_coord, y_coord = [], []
 
-fig = plt.figure()
-axis = fig.add_subplot(111, xlim=(-5, 15), ylim=(-5, 15))
-line, = axis.plot([], [], lw=3)
-ani = None
+max_points = 50
+max_points_2 = 50
+
+
+line, = ax.plot(np.arange(max_points), 
+                np.ones(max_points, dtype=np.float)*np.nan, lw=1, c='blue',ms=1)
+line_2, = ax_2.plot(np.arange(max_points_2), 
+                np.ones(max_points, dtype=np.float)*np.nan, lw=1,ms=1)
 
 
 def init():
-    line.set_data([], [])
-    return line,
+    return line
+def init_2():
+    return line_2
 
 
 def animate(i):
-    x_points = [0, x_coord[i]]
-    y_points = [0, y_coord[i]]
-    line.set_data(x_points, y_points)
-    return line,
+    y = random.randint(0,1024)
+    old_y = line.get_ydata()
+    new_y = np.r_[old_y[1:], y]
+    line.set_ydata(new_y)
+    print(new_y)
+    return line
+
+def animate_2(i):
+    y_2 = random.randint(0,512)
+    old_y_2 = line_2.get_ydata()
+    new_y_2 = np.r_[old_y_2[1:], y_2]
+    line_2.set_ydata(new_y_2)
+    print(new_y_2)
+    return line_2
 
 
-def onclick(event):
-    if event.inaxes is axis:
-        print(event.xdata, event.ydata)
-        x_coord.append(event.xdata)
-        y_coord.append(event.ydata)
 
 
-def buttonPress(pressevent):
-    global ani
-    print('pressed')
-    print(x_coord)
-    ani = FuncAnimation(fig, animate, init_func=init, frames=len(x_coord), interval=100, blit=False)
+root = Tk.Tk() #추가
+label = Tk.Label(root,text="라벨").grid(column=0, row=0)#추가
+canvas = FigureCanvasTkAgg(fig, master=root) #
+canvas.get_tk_widget().grid(column=0,row=1) #
 
 
-cid = fig.canvas.mpl_connect('button_press_event', onclick)
 
-axprev = plt.axes([0.5, 0, 0.1, 0.1])
-button = Button(axprev, 'press')
-button.on_clicked(buttonPress)
-
-plt.show()
+anim = animation.FuncAnimation(fig, animate  , init_func= init ,frames=200, interval=50, blit=False)
+anim_2 = animation.FuncAnimation(fig, animate_2  , init_func= init_2 ,frames=200, interval=10, blit=False)
+Tk.mainloop()
