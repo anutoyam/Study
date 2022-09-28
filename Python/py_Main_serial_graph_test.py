@@ -24,7 +24,7 @@ bit = []
 data = []
 cycle = 0
 status = True
-profile = 4
+profile = 0
 
 #window 선언
 root = tk.Tk()
@@ -38,7 +38,7 @@ vari4 = tk.IntVar()
 vari5 = tk.IntVar()
 vari6 = tk.IntVar()
 
-fig = plt.figure(figsize=(12,8))
+fig = plt.figure(figsize=(12,7.715))
 plt.subplots_adjust(left=0.35)
 ax = plt.axes(xlim=(0, 127), ylim=(0, 255))
 line, = ax.plot([], [], lw=1)
@@ -66,18 +66,19 @@ def animate(event):
         
 def btnfunc(label):
     global status, ax, anim, profile
+    print(status)
     if status == True :
         anim.event_source.stop()
         status = False
     else : 
-        status = True
         if label.inaxes._children[0]._text == 'UNPROCESSED' : 
             profile = 1
         elif label.inaxes._children[0]._text == 'LOWER' : 
             profile = 2
         elif label.inaxes._children[0]._text == 'DERIVATIVE' : 
             profile = 3
-            anim.event_source.start()
+        anim.event_source.start()
+        status = True
 
 def openFrame(frame) :
     global profile,anim
@@ -87,12 +88,7 @@ def openFrame(frame) :
         profile = 1
     frame.tkraise()
 
-def measureUpdate(data) :
-    global var
-    while True :
-        var.set('123123')
-        frame2.update_idletasks()
-        time.sleep(2)
+
 
 #endregion
 
@@ -113,11 +109,11 @@ btnpDERIVATIVE = Button(resetax3, label= 'DERIVATIVE', color="lightgray", hoverc
 
 # OneShot BTN
 resetax5 = plt.axes([0.05, 0.35, 0.2, 0.04])
-btnoUNPROCESSED = Button(resetax5, label= 'UNPROCESSED', color="lightgray", hovercolor='0.975')
+btnoUNPROCESSED = Button(resetax5, label= 'OneShot UNPROCESSED', color="lightgray", hovercolor='0.975')
 resetax6 = plt.axes([0.05, 0.3, 0.2, 0.04])
-btnoLOWER = Button(resetax6, label= 'LOWER', color="lightgray", hovercolor='0.975')
+btnoLOWER = Button(resetax6, label= 'OneShot LOWER', color="lightgray", hovercolor='0.975')
 resetax7 = plt.axes([0.05, 0.25, 0.2, 0.04])
-btnoDERIVATIVE = Button(resetax7, label= 'DERIVATIVE', color="lightgray", hovercolor='0.975')
+btnoDERIVATIVE = Button(resetax7, label= 'OneShot DERIVATIVE', color="lightgray", hovercolor='0.975')
 
 # '''TEXT BOX'''
 mybox = {'facecolor':'y','edgecolor':'r','boxstyle':'round','alpha':0.5}
@@ -125,47 +121,50 @@ plt.text(0.05,15,('Period Scan'),fontsize = 11, bbox=mybox)
 plt.text(0.05,4,('OneShot Scan'),fontsize = 11, bbox=mybox)
 
 # '''Measure Scan'''
-label1 = tk.Label(frame2, width= 50, height= 5)
+label1 = tk.Label(frame2, width= 50, height= 30)
 label1.pack(fill='both')
-label1_1 = tk.Label(label1, text = 'Status 1 :',font=(30))
+label1_1 = tk.Label(label1, text = 'Status 1 :',font=("Arial", 30))
 label1_1.pack(side='left')
-label1_2 = tk.Label(label1, textvariable=vari1 ,font=(30))
+label1_2 = tk.Label(label1, textvariable=vari1 ,font=("Arial", 30))
 label1_2.pack(side='left')
 
-label2 = tk.Label(frame2, width= 50, height= 5)
+label2 = tk.Label(frame2, width= 50, height= 30)
 label2.pack(fill='both')
-label2_1 = tk.Label(label2, text = 'Status :',font=(30))
+label2_1 = tk.Label(label2, text = 'Status :',font=("Arial", 30))
 label2_1.pack(side='left')
-label2_2 = tk.Label(label2, textvariable=vari2 ,font=(30))
+label2_2 = tk.Label(label2, textvariable=vari2 ,font=("Arial", 30))
 label2_2.pack(side='left')
 
-label3 = tk.Label(frame2, width= 50, height= 5)
+label3 = tk.Label(frame2, width= 50, height= 30)
 label3.pack(fill='both')
-label3_1 = tk.Label(label3, text = 'Position :',font=(30))
+label3_1 = tk.Label(label3, text = 'Position :',font=("Arial", 30))
 label3_1.pack(side='left')
-label3_2 = tk.Label(label3, textvariable=vari3 ,font=(30))
+label3_2 = tk.Label(label3, textvariable=vari3 ,font=("Arial", 30))
 label3_2.pack(side='left')
 
-label4 = tk.Label(frame2, width= 50, height= 5)
+label4 = tk.Label(frame2, width= 50, height= 30)
 label4.pack(fill='both')
-label4_1 = tk.Label(label4, text = 'Energy :',font=(30))
+label4_1 = tk.Label(label4, text = 'Energy :',font=("Arial", 30))
 label4_1.pack(side='left')
-label4_2 = tk.Label(label4, textvariable=vari4 ,font=(30))
+label4_2 = tk.Label(label4, textvariable=vari4 ,font=("Arial", 30))
 label4_2.pack(side='left')
 
-label5 = tk.Label(frame2, width= 50, height= 5)
+label5 = tk.Label(frame2, width= 50, height= 30)
 label5.pack(fill='both')
-label5_1 = tk.Label(label5, text = 'UNDEF :',font=(30))
+label5_1 = tk.Label(label5, text = 'UNDEF :',font=("Arial", 30))
 label5_1.pack(side='left')
-label5_2 = tk.Label(label5, textvariable=vari5 ,font=(30))
+label5_2 = tk.Label(label5, textvariable=vari5 ,font=("Arial", 30))
 label5_2.pack(side='left')
 
-label6 = tk.Label(frame2, width= 50, height= 5)
+label6 = tk.Label(frame2, width= 50, height= 30)
 label6.pack(fill='both')
-label6_1 = tk.Label(label6, text = 'UNDEF :',font=(30))
+label6_1 = tk.Label(label6, text = 'UNDEF :',font=("Arial", 30))
 label6_1.pack(side='left')
-label6_2 = tk.Label(label6, textvariable=vari6 ,font=(30))
+label6_2 = tk.Label(label6, textvariable=vari6 ,font=("Arial", 30))
 label6_2.pack(side='left')
+
+label6 = tk.Label(frame2, width= 50, height= 29)
+label6.pack(fill='both')
 
 
 # Frame BTN
@@ -231,7 +230,7 @@ if __name__ == '__main__' :
     anim = FuncAnimation(fig, animate, interval=500)
 
     btnToFrame1.pack(fill='x')
-    btnToFrame2.pack(fill='x',side='bottom', anchor='s',expand= True)
+    btnToFrame2.pack(fill='x',expand= True)
     
     openFrame(frame1)
     tk.mainloop()
