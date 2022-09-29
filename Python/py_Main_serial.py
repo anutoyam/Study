@@ -23,13 +23,16 @@ import tkinter.font as font
 bit = []
 data = []
 cycle = 0
-status = True
 profile = 0
+ex_profile = 1
+status = True
+btnTitle = "UNPROCESSED"
+ex_btnTitle = ""
 
 #window 선언
 root = tk.Tk()
 root.title('SPICA Sensor Comm')
-root.resizable(width=False, height=False)
+root.columnconfigure(2,weight= 1)
 
 vari1 = tk.IntVar()
 vari2 = tk.IntVar()
@@ -38,7 +41,7 @@ vari4 = tk.IntVar()
 vari5 = tk.IntVar()
 vari6 = tk.IntVar()
 
-fig = plt.figure(figsize=(12,7.715))
+fig = plt.figure(figsize=(12,7.02))
 plt.subplots_adjust(left=0.35)
 ax = plt.axes(xlim=(0, 127), ylim=(0, 255))
 line, = ax.plot([], [], lw=1)
@@ -46,8 +49,8 @@ anim = None
 
 #region FUNC
 def animate(event):
-    global profile,vari1,vari2,vari3,vari4,vari5,vari6
-    if profile != 4 :
+    global profile,vari1,vari2,vari3,vari4,vari5,vari6,cycle
+    if profile == 1 or profile == 2 or profile == 3 :
         data = py_Serial_1.serial_recieve(ser,profile)
         Ydata = list(data)
         x = np.linspace(0,127,128)
@@ -63,46 +66,92 @@ def animate(event):
         vari4.set(data[3])
         vari5.set(data[4])
         vari6.set(data[5])
-        
+        frame2.update()
+    elif profile == 5 or profile == 6 or profile == 7 :
+        if cycle == 0 :
+            data = py_Serial_1.serial_recieve(ser,profile)
+            Ydata = list(data)
+            x = np.linspace(0,127,128)
+            y = (Ydata)
+            line.set_data(x, y)
+            cycle = 1
+            return line,
+
 def btnfunc(label):
-    global status, ax, anim, profile
+    global status, ax, anim, profile, btnTitle, cycle
     print(status)
-    if status == True :
-        
+    if status == True and btnTitle == label.inaxes._children[0]._text:
+        btnpUNPROCESSED.color = 'lightgray'
+        btnpLOWER.color = 'lightgray'
+        btnpDERIVATIVE.color = 'lightgray'
         anim.event_source.stop()
         status = False
     else : 
         if label.inaxes._children[0]._text == 'UNPROCESSED' : 
             profile = 1
+            btnTitle = 'UNPROCESSED'
+            btnpUNPROCESSED.color = 'red'
+            btnpLOWER.color = 'lightgray'
+            btnpDERIVATIVE.color = 'lightgray'
         elif label.inaxes._children[0]._text == 'LOWER' : 
             profile = 2
+            btnTitle = 'LOWER'
+            btnpUNPROCESSED.color = 'lightgray'
+            btnpLOWER.color = 'red'
+            btnpDERIVATIVE.color = 'lightgray'
         elif label.inaxes._children[0]._text == 'DERIVATIVE' : 
             profile = 3
+            btnTitle = 'DERIVATIVE'
+            btnpUNPROCESSED.color = 'lightgray'
+            btnpLOWER.color = 'lightgray'
+            btnpDERIVATIVE.color = 'red'
+        elif label.inaxes._children[0]._text == 'OneShot UNPROCESSED' : 
+            profile = 5
+            cycle = 0
+            btnTitle = 'OneShot UNPROCESSED'
+            btnpUNPROCESSED.color = 'lightgray'
+            btnpLOWER.color = 'lightgray'
+            btnpDERIVATIVE.color = 'lightgray'
+        elif label.inaxes._children[0]._text == 'OneShot LOWER' : 
+            profile = 6
+            cycle = 0
+            btnTitle = 'OneShot LOWER'
+            btnpUNPROCESSED.color = 'lightgray'
+            btnpLOWER.color = 'lightgray'
+            btnpDERIVATIVE.color = 'lightgray'
+        elif label.inaxes._children[0]._text == 'OneShot DERIVATIVE' : 
+            profile = 7
+            cycle = 0
+            btnTitle = 'OneShot DERIVATIVE'
+            btnpUNPROCESSED.color = 'lightgray'
+            btnpLOWER.color = 'lightgray'
+            btnpDERIVATIVE.color = 'lightgray'
         anim.event_source.start()
         status = True
 
 def openFrame(frame) :
-    global profile,anim
+    global profile,ex_profile
     if frame == frame2 :
+        ex_profile = profile
         profile = 4
     if frame == frame1 :
-        profile = 1
+        profile = ex_profile
     frame.tkraise()
-
-
-
 #endregion
 
 #'''Frame 선언'''
 frame1 = tk.Frame(root)
 frame2 = tk.Frame(root)
-frame1.grid(column=0, row=1, sticky="nsew")
-frame2.grid(column=0, row=1, sticky="nsew")
+frame1.grid(column=0, row=0, sticky="nsew")
+frame2.grid(column=0, row=0, sticky="nsew")
+
+frame3 = tk.Frame(frame2)
+frame3.grid(column=0, row=6, sticky="nsew")
 
 # ''' Add Button '''
 # Period BTN
 resetax1 = plt.axes([0.05, 0.78, 0.2, 0.04])
-btnpUNPROCESSED = Button(resetax1, label= 'UNPROCESSED', color="lightgray", hovercolor='0.975')
+btnpUNPROCESSED = Button(resetax1, label= 'UNPROCESSED', color="red", hovercolor='0.975')
 resetax2 = plt.axes([0.05, 0.73, 0.2, 0.04])
 btnpLOWER = Button(resetax2, label= 'LOWER', color="lightgray", hovercolor='0.975')
 resetax3 = plt.axes([0.05, 0.68, 0.2, 0.04])
@@ -122,59 +171,44 @@ plt.text(0.05,15,('Period Scan'),fontsize = 11, bbox=mybox)
 plt.text(0.05,4,('OneShot Scan'),fontsize = 11, bbox=mybox)
 
 # '''Measure Scan'''
-label1 = tk.Label(frame2, width= 50, height= 30)
-label1.pack(fill='both')
-label1_1 = tk.Label(label1, text = 'Status 1 :',font=("Arial", 30))
-label1_1.pack(side='left')
-label1_2 = tk.Label(label1, textvariable=vari1 ,font=("Arial", 30))
-label1_2.pack(side='left', padx= 20)
+label1_1 = tk.Label(frame2, text = 'Status 1 :',font=("Arial", 30))
+label1_1.grid(column=0,row=0, sticky='e')
+label1_2 = tk.Label(frame2, textvariable=vari1 ,font=("Arial", 30))
+label1_2.grid(column=1,row=0, sticky='w')
 
-label2 = tk.Label(frame2, width= 50, height= 30)
-label2.pack(fill='both')
-label2_1 = tk.Label(label2, text = 'Status :',font=("Arial", 30))
-label2_1.pack(side='left')
-label2_3 = tk.Label(label2, width= 10, height= 5)
-label2_3.pack(side='left')
-label2_2 = tk.Label(label2, textvariable=vari2 ,font=("Arial", 30))
-label2_2.pack(side='left', padx= 100)
+label2_1 = tk.Label(frame2, text = 'Status :',font=("Arial", 30))
+label2_1.grid(column=0,row=1, sticky='e')
+label2_2 = tk.Label(frame2, textvariable=vari2 ,font=("Arial", 30))
+label2_2.grid(column=1,row=1, sticky='w')
 
-label3 = tk.Label(frame2, width= 50, height= 30)
-label3.pack(fill='both')
-label3_1 = tk.Label(label3, text = 'Position :',font=("Arial", 30))
-label3_1.pack(side='left')
-label3_2 = tk.Label(label3, textvariable=vari3 ,font=("Arial", 30))
-label3_2.pack(side='left', padx= 20)
+label3_1 = tk.Label(frame2, text = 'Position :',font=("Arial", 30))
+label3_1.grid(column=0,row=2, sticky='e')
+label3_2 = tk.Label(frame2, textvariable=vari3 ,font=("Arial", 30))
+label3_2.grid(column=1,row=2, sticky='w')
 
-label4 = tk.Label(frame2, width= 50, height= 30)
-label4.pack(fill='both')
-label4_1 = tk.Label(label4, text = 'Energy :',font=("Arial", 30))
-label4_1.pack(side='left')
-label4_2 = tk.Label(label4, textvariable=vari4 ,font=("Arial", 30))
-label4_2.pack(side='left', padx= 20)
+label4_1 = tk.Label(frame2, text = 'Energy :',font=("Arial", 30))
+label4_1.grid(column=0,row=3, sticky='e')
+label4_2 = tk.Label(frame2, textvariable=vari4 ,font=("Arial", 30))
+label4_2.grid(column=1,row=3, sticky='w')
 
-label5 = tk.Label(frame2, width= 50, height= 30)
-label5.pack(fill='both')
-label5_1 = tk.Label(label5, text = 'UNDEF :',font=("Arial", 30))
-label5_1.pack(side='left')
-label5_2 = tk.Label(label5, textvariable=vari5 ,font=("Arial", 30))
-label5_2.pack(side='left', padx= 20)
+label5_1 = tk.Label(frame2, text = 'UNDEF :',font=("Arial", 30))
+label5_1.grid(column=0,row=4, sticky='e')
+label5_2 = tk.Label(frame2, textvariable=vari5 ,font=("Arial", 30))
+label5_2.grid(column=1,row=4, sticky='w')
 
-label6 = tk.Label(frame2, width= 50, height= 30)
-label6.pack(fill='both')
-label6_1 = tk.Label(label6, text = 'UNDEF :',font=("Arial", 30))
-label6_1.pack(side='left')
-label6_2 = tk.Label(label6, textvariable=vari6 ,font=("Arial", 30))
-label6_2.pack(side='left', padx= 20)
+label6_1 = tk.Label(frame2, text = 'UNDEF :',font=("Arial", 30))
+label6_1.grid(column=0,row=5, sticky='e')
+label6_2 = tk.Label(frame2, textvariable=vari6 ,font=("Arial", 30))
+label6_2.grid(column=1,row=5, sticky='w')
 
-label6 = tk.Label(frame2, width= 50, height= 29)
-label6.pack(fill='both')
-
+label7 = tk.Label(frame2,width=10,height=26)
+label7.grid(column=0,row=6,columnspan=2)
 
 # Frame BTN
 f = font.Font(size=15, weight='bold')
 btnToFrame1 = tk.Button(frame2,
     text= "Change To Profile",
-    padx=100,
+    padx=507,
     pady=10,
     command=lambda:[openFrame(frame1)])
 btnToFrame2 = tk.Button(frame1,
@@ -185,7 +219,8 @@ btnToFrame2 = tk.Button(frame1,
 btnToFrame1['font'] = f
 btnToFrame2['font'] = f
 
-
+btnToFrame1.grid(column=0,row=7, columnspan=2, sticky='ew')
+btnToFrame2.grid(column=0,row=1, sticky='we')
 
 if __name__ == '__main__' :
     print("SPICA Sensor 스캔을 시작 합니다.")
@@ -228,18 +263,10 @@ if __name__ == '__main__' :
     btnoDERIVATIVE.on_clicked(btnfunc)
 
     canvas = FigureCanvasTkAgg(fig, master=frame1) 
-    canvas.get_tk_widget().pack()
+    canvas.get_tk_widget().grid(column=0,row=0)
     
     anim = FuncAnimation(fig, animate, interval=500)
-
-    btnToFrame1.pack(fill='x')
-    btnToFrame2.pack(fill='x',expand= True)
-    
     openFrame(frame1)
-    tk.mainloop()
-
-    # 통신중인지 확인하는 쓰레드. 나중에 추가
-    # th_PlcisCon = threading.Thread(target=py_snap7.plcIsConnect, args=(bit,))
-    # th_PlcisCon.start()
-
     
+
+    tk.mainloop()

@@ -53,6 +53,18 @@ def serial_send(ser,num) :
         #read Measure
         command = b'\xA5\x01\x91\x00\x00\x00\x37'
         ser.write(serial.to_bytes(command)) 
+    elif num == 5 :
+        #UNPROCESSED read buffer
+        command = b'\xA5\x01\x92\x00\x00\x00\x38'
+        ser.write(serial.to_bytes(command)) 
+    elif num == 6 :
+        #LOWER read buffer
+        command = b'\xA5\x01\x92\x01\x00\x00\x39'
+        ser.write(serial.to_bytes(command)) 
+    elif num == 7 :
+        #DERIVATIVE read buffer
+        command = b'\xA5\x01\x92\x02\x00\x00\x3A'
+        ser.write(serial.to_bytes(command)) 
 
 #시리얼 통신 Recieve
 def serial_recieve(ser,profile) :
