@@ -4,10 +4,8 @@ import threading
 import serial
 import time
 
-
 exitThread = False # 쓰레드 종료용 변수
 line = [] #라인 단위로 데이터 가져올 리스트 변수
-
 
 #region Function
 #시리얼 통신 접속
@@ -20,6 +18,7 @@ def serial_connect(port = 'COM4', baudrate = 115200, bytesize = serial.EIGHTBITS
     ser.stopbits = stopbits
     ser.timeout = timeout
     ser.open()
+    print("test")
     return ser
 
 #시리얼 통신 확인
