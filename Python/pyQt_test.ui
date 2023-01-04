@@ -26,14 +26,40 @@
   <widget class="QPushButton" name="btn_Connect">
    <property name="geometry">
     <rect>
-     <x>840</x>
-     <y>120</y>
+     <x>830</x>
+     <y>110</y>
      <width>75</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
     <string>Connect</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lb_Status">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>200</y>
+     <width>91</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>접속상태</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_Read">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>150</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PushButton</string>
    </property>
   </widget>
  </widget>
