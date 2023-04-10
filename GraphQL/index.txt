@@ -1,0 +1,4 @@
+Schema란 서버와 클라이언트가 주고 받을때 데이터의 형식을 정의한 약속이다.
+
+1. Schema에서 Type Query를 먼저 찾는다.
+2. endpoint = api에 접근할수있는 url
