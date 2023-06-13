@@ -1,3 +1,9 @@
+Swift란?
+컴파일언어 -> 1. 실행전 소스코드를 컴파일하여 기계어로 변환 후 해당 파일을 실행한다.
+              2. 이미 기계어로 변환된 것을 실행하므로 비교적 빠름.
+              3. 문법적 제약이 일반적으로 많음
+              4. 운영체제에 따라 다르게 작업해야 함.
+
 콘솔로그 & 보간법
 
 1. "안녕하세요! 저는 \(age) 살입니다."
@@ -99,7 +105,7 @@ integerSet.insert(99)
 integerSet.insert(99)
 
 integerSet >> {100,99,1} 중복은 허용하지 않음
-
+ 
 let setA : Set<Int> = [1,2,3,4,5]
 let setB : Set<Int> = [3,4,5,6,7]
 
@@ -107,3 +113,57 @@ let union : Set<Int> = setA.union(setB) >> {2,4,5,6,3,7,1}
 let sortedUnion : [Int] = union.sorted() >> {1,2,3,4,5,6,7}
 let intersection : Set<Int> = setA.intersection(setB) >> {5,3,4} 교집합
 let subtracting : Set<Int> = setA.subtracting(setB) >> {2,1} 차집합
+
+/////////
+function
+반환값이 있는 함수
+func 함수이름(매개변수1이름 : 매개변수1타입, 매개변수2이름: 매개변수2타입 ...) -> 반환타입 {
+    함수 구현부
+    return 반환값
+}
+
+func sum(a: Int, b : Int) -> Int {
+    return a + b
+}
+
+반환값이 없는 함수
+func 함수이름(매개변수1이 : 매개변수1타입, 매개변수2이름 : 매개변수2타입 ...) -> Void {
+    함수 구현부
+    return
+}
+
+func printMyName(name : String) -> Void {
+    print(name)
+}
+
+매개변수와 반환값 전부 없을수도있다
+func hello() -> print{"hello"}
+
+기본값을 갖는 매개변수는 매개변수 목록 중에 뒤쪽에 위치하는 것이 좋다.
+func 함수이름(매개변수1이름 : 매개변수1타입, 매개변수2이름 : 매개변수2타입 = 매개변수 기본값...) -> 반환타입 {
+    함수 구현부
+    return 반환값
+}
+
+func greeting(friend : String, me : String = "MH"){
+    print("Hello \(friend)! I'm \(me)")
+}
+
+함수 내부에서 전달인자를 사용할 때에는 매개변수 이름을 사용합니다.
+함수이름이 greeting 뿐만 아니라 to, from 까지 합쳐졌기때문에 greeting이 중복되도 작동함.
+func greeting(to friend : String, from me : String){
+    print("Hello \(friend)! I'm \(me)")
+}
+
+전달 받을 값의 개수를 알기 어려울 때 가변 매개변수를 사용한다.
+가변 매개변수는 함수당 하나만 가질 수 있다.
+func 함수이름(매개변수1이름 : 매개변수1타입, 전달인자 레이블 : 매개변수2이름 : 매개변수2타입...) -> 반환타입 {
+    함수 구현부
+    return
+}
+
+func sayHelloToFriends(me : String, friends : String...) -> String{
+    return "Hello \(friend)! I'm \(me)!"
+}
+
+print(sayHelloToFriends(me : "MH", friends : "A","B","C"))
